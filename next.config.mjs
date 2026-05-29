@@ -3,6 +3,20 @@ import { withContentCollections } from "@content-collections/next";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: "/blog",
+        destination: "/resources",
+        permanent: true,
+      },
+      {
+        source: "/blog/:slug",
+        destination: "/resources/:slug",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

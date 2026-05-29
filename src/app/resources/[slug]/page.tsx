@@ -1,5 +1,4 @@
 import { allPosts } from "content-collections";
-import { formatDate } from "@/lib/utils";
 import { DATA } from "@/data/resume";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -52,7 +51,7 @@ export async function generateMetadata({
       description,
       type: "article",
       publishedTime,
-      url: `${DATA.url}/blog/${slug}`,
+      url: `${DATA.url}/resources/${slug}`,
       ...(image && {
         images: [
           {
@@ -72,7 +71,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Blog({
+export default async function ResourcePage({
   params,
 }: {
   params: Promise<{
@@ -98,15 +97,15 @@ export default async function Blog({
 
   const jsonLdContent = JSON.stringify({
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@type": "Article",
     headline: post.title,
     datePublished: post.publishedAt,
     dateModified: post.publishedAt,
     description: post.summary,
     image: post.image
       ? `${DATA.url}${post.image}`
-      : `${DATA.url}/blog/${slug}/opengraph-image`,
-    url: `${DATA.url}/blog/${slug}`,
+      : `${DATA.url}/resources/${slug}/opengraph-image`,
+    url: `${DATA.url}/resources/${slug}`,
     author: {
       "@type": "Person",
       name: DATA.name,
@@ -114,7 +113,7 @@ export default async function Blog({
   }).replace(/</g, "\\u003c");
 
   return (
-    <section id="blog">
+    <section id="resources">
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -123,31 +122,17 @@ export default async function Blog({
         }}
       />
       <div className="flex justify-start gap-4 items-center">
-        <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 mb-6 group" aria-label="Back to Blog">
+        <Link href="/resources" className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 mb-6 group" aria-label="Back to Resources">
           <ChevronLeft className="size-3 group-hover:-translate-x-px transition-transform" />
-          Back to Blog
+          Back to Resources
         </Link>
       </div>
       <div className="flex flex-col gap-4">
         <h1 className="title font-semibold text-3xl md:text-4xl tracking-tighter leading-tight">
           {post.title}
         </h1>
-        <p className="text-sm text-muted-foreground">
-          {formatDate(post.publishedAt)}
-        </p>
       </div>
-      <div className="my-6 flex w-full items-center">
-        <div
-          className="flex-1 h-px bg-border"
-          style={{
-            maskImage:
-              "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
-            WebkitMaskImage:
-              "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
-          }}
-        />
-      </div>
-      <article className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
+      <article className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert mt-6">
         <MDXContent code={post.mdx} components={mdxComponents} />
       </article>
 
@@ -155,7 +140,7 @@ export default async function Blog({
         <div className="flex flex-col sm:flex-row justify-between gap-4">
           {previousPost ? (
             <Link
-              href={`/blog/${getSlug(previousPost)}`}
+              href={`/resources/${getSlug(previousPost)}`}
               className="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors"
             >
               <span className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -172,7 +157,7 @@ export default async function Blog({
 
           {nextPost ? (
             <Link
-              href={`/blog/${getSlug(nextPost)}`}
+              href={`/resources/${getSlug(nextPost)}`}
               className="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors text-right"
             >
               <span className="flex items-center justify-end gap-1 text-xs text-muted-foreground">

@@ -1,5 +1,5 @@
 /**
- * Pagination utilities for blog posts and other content collections
+ * Pagination utilities for resources and other content collections
  */
 
 export interface PaginationOptions {
