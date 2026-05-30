@@ -417,7 +417,7 @@ export function FileCabinetDrawer({
         ref={tabListRef}
         role="tablist"
         aria-label="Resource folders"
-        className="relative -mt-1 flex items-end overflow-x-auto px-3 pt-1 [scrollbar-width:none] sm:px-4 [&::-webkit-scrollbar]:hidden"
+        className="relative -mt-1 flex items-end overflow-x-auto overflow-y-hidden px-3 pt-1 touch-pan-x [scrollbar-width:none] sm:px-4 [&::-webkit-scrollbar]:hidden"
         onKeyDown={(e) => {
           if (e.key === "ArrowRight") {
             e.preventDefault();

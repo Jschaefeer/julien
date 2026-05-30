@@ -348,8 +348,8 @@ export function ExpandableTable(props: ComponentProps<"table">) {
 
   return (
     <>
-      <div className="not-prose my-6">
-        <div className="mb-2 flex justify-end">
+      <div className="not-prose mt-2 mb-6">
+        <div className="mb-1 flex justify-end">
           <button
             type="button"
             onClick={openLightbox}
