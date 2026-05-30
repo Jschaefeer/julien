@@ -5,7 +5,7 @@
 @media print {
   @page {
     size: letter;
-    margin: 0.28in 0.32in;
+    margin: 0.45in 0.5in;
   }
 
   html {
@@ -20,7 +20,6 @@
     print-color-adjust: exact;
   }
 
-  /* Only print the dedicated sheet — hide all site chrome */
   body * {
     visibility: hidden;
   }
@@ -35,6 +34,7 @@
     left: 0;
     top: 0;
     width: 100%;
+    display: block !important;
   }
 
   section#resources > *:not(.nil-print-sheet) {
@@ -52,186 +52,46 @@
     margin: 0 !important;
   }
 
-  .nil-print-sheet {
-    display: block !important;
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 11pt;
-    line-height: 1.35;
-    color: #111;
+  .nil-print-sheet .nil-checklist {
+    --nil-pro-accent: oklch(0.52 0.14 82);
+    --nil-strike-color: color-mix(in oklch, #737373 55%, transparent);
+    max-width: none !important;
+    font-size: 10.5pt;
+    line-height: 1.45;
   }
 
-  .nil-print-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 9.44in;
+  .nil-print-sheet .nil-checklist :where(li.task-list-item > input[type="checkbox"]) {
+    accent-color: #111 !important;
+    cursor: default !important;
   }
 
-  .nil-print-page + .nil-print-page {
-    break-before: page;
-    page-break-before: always;
+  .nil-print-sheet .nil-checklist :where(li.task-list-item.nil-checklist-row) {
+    cursor: default !important;
   }
 
-  .nil-print-page-header {
-    margin: 0 0 0.12in;
-    padding-bottom: 0.08in;
-    border-bottom: 2px solid #1e4d3a;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 12pt;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    text-align: center;
-    color: #1e4d3a;
+  .nil-print-sheet .nil-checklist :where(h2):not(:where([class~="not-prose"] *)) {
+    break-after: avoid;
+    page-break-after: avoid;
   }
 
-  .nil-print-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.22in;
-    align-items: start;
-    flex: 1;
+  .nil-print-sheet .nil-checklist :where(blockquote):not(:where([class~="not-prose"] *)) {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
-  .nil-print-col,
-  .nil-print-band,
-  .nil-print-disclaimer,
-  .nil-print-page-footer {
-    break-inside: auto;
-    page-break-inside: auto;
+  .nil-print-sheet .nil-checklist :where(li.task-list-item):not(:where([class~="not-prose"] *)) {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
-  .nil-print-section h2 {
-    margin: 0 0 0.1in;
-    padding: 0.09in 0.12in;
-    border-radius: 2px;
-    background: #1e4d3a;
-    color: #fff;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 10pt;
-    font-weight: 700;
-    line-height: 1.1;
+  /* Title divider only — keep section rules (---) elsewhere */
+  .nil-print-sheet .nil-checklist > p:first-of-type + div {
+    display: none !important;
+    margin: 0 !important;
+    height: 0 !important;
   }
 
-  .nil-print-sub {
-    margin-bottom: 0.08in;
-  }
-
-  .nil-print-sub h3 {
-    margin: 0.09in 0 0.04in;
-    padding-bottom: 0.025in;
-    border-bottom: 0.5px solid #ccc;
-    font-size: 8.25pt;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #333;
-  }
-
-  .nil-print-sub ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .nil-print-sub li {
-    margin: 0.065in 0;
-    break-inside: auto;
-    page-break-inside: auto;
-  }
-
-  .nil-print-sub label {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.06in;
-    cursor: default;
-  }
-
-  .nil-print-sub input[type="checkbox"] {
-    width: 9pt;
-    height: 9pt;
-    margin: 1pt 0 0;
-    flex-shrink: 0;
-    accent-color: #1e4d3a;
-  }
-
-  .nil-print-sub em {
-    display: block;
-    margin: 0.02in 0 0 0.2in;
-    font-size: 8pt;
-    font-style: italic;
-    color: #444;
-  }
-
-  .nil-print-real-talk {
-    margin: 0.025in 0 0 0.2in;
-    font-size: 8pt;
-    font-style: italic;
-    color: #444;
-  }
-
-  .nil-print-real-talk strong {
-    font-style: normal;
-    font-weight: 700;
-  }
-
-  .nil-print-pro {
-    margin-top: 0.07in;
-  }
-
-  .nil-print-pro h4 {
-    margin: 0 0 0.025in;
-    font-size: 8pt;
-    font-weight: 700;
-    color: #b91c1c;
-  }
-
-  .nil-print-pro p {
-    margin: 0;
-    font-size: 8pt;
-    font-style: italic;
-    color: #b91c1c;
-  }
-
-  .nil-print-band {
-    margin: 0.12in 0 0;
-    padding: 0.1in;
-    border-radius: 3px;
-    background: #1e4d3a;
-    color: #fff;
-    text-align: center;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 10pt;
-    font-weight: 700;
-  }
-
-  .nil-print-disclaimer {
-    margin: 0.1in 0 0;
-    font-size: 7pt;
-    font-style: italic;
-    line-height: 1.35;
-    color: #555;
-  }
-
-  .nil-print-page-footer {
-    margin-top: auto;
-    padding-top: 0.08in;
-    border-top: 0.5px solid #ccc;
-    text-align: center;
-  }
-
-  .nil-print-page-footer p {
-    margin: 0;
-    font-size: 7pt;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #555;
-  }
-
-  .nil-print-page-footer .nil-print-url {
-    margin-top: 0.03in;
-    font-size: 7.5pt;
-    letter-spacing: 0.02em;
-    text-transform: none;
-    color: #1e4d3a;
+  .nil-print-sheet .nil-checklist .brand-logo {
+    display: none !important;
   }
 }

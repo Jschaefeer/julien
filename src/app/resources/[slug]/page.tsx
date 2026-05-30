@@ -146,9 +146,7 @@ export default async function ResourcePage({
           {isNilChecklist ? <ChecklistPrintButton /> : null}
         </div>
       </BlurFade>
-      {isNilChecklist ? (
-        <NilChecklistPrintSheet author={DATA.fullName} />
-      ) : null}
+      {isNilChecklist ? <NilChecklistPrintSheet mdx={post.mdx} /> : null}
       <BlurFade delay={BLUR_FADE_DELAY * 2}>
         {isNilChecklist ? (
           <NilChecklistArticle className="no-print nil-checklist prose w-full max-w-3xl text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert mt-6">

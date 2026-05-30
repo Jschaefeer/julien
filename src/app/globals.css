@@ -319,10 +319,7 @@
 
   /* NIL Dispatch — editorial checklist (screen) */
   .nil-checklist {
-    --nil-green: oklch(0.32 0.07 155);
-    --nil-green-soft: oklch(0.32 0.07 155 / 14%);
-    --nil-pro-red: oklch(0.48 0.18 25);
-    --nil-pro-soft: oklch(0.48 0.18 25 / 12%);
+    --nil-pro-accent: oklch(0.52 0.14 82);
     --nil-strike-color: color-mix(in oklch, var(--muted-foreground) 55%, transparent);
   }
 
@@ -331,8 +328,7 @@
   }
 
   .nil-checklist :where(h2):not(:where([class~="not-prose"] *)) {
-    @apply mt-12 mb-6 rounded-md px-4 py-3 text-lg! font-serif! font-semibold! tracking-tight! text-white!;
-    background: var(--nil-green);
+    @apply mt-12 mb-6 text-2xl! font-semibold! tracking-tight! text-foreground!;
   }
 
   .nil-checklist :where(h2):first-of-type {
@@ -340,21 +336,19 @@
   }
 
   .nil-checklist :where(h3:not(:has(+ blockquote))):not(:where([class~="not-prose"] *)) {
-    @apply mt-8 mb-3 text-xs! font-semibold! uppercase tracking-[0.14em] text-muted-foreground!;
+    @apply mt-8 mb-3 text-xs! font-semibold! uppercase tracking-[0.14em] text-foreground!;
   }
 
   .nil-checklist :where(h3:has(+ blockquote)):not(:where([class~="not-prose"] *)) {
     @apply mt-8 mb-2 text-sm! font-semibold! normal-case tracking-normal;
-    color: var(--nil-pro-red) !important;
+    color: var(--nil-pro-accent) !important;
   }
 
   .nil-checklist :where(h3 + blockquote):not(:where([class~="not-prose"] *)) {
     margin: 0 0 2rem !important;
-    padding: 0.875rem 1rem !important;
-    border: none !important;
-    border-radius: 0.5rem !important;
-    background: var(--nil-pro-soft) !important;
-    color: var(--nil-pro-red) !important;
+    @apply rounded-xl border border-border bg-muted/30 px-4 py-3 not-italic text-foreground/90;
+    border-inline-start-width: 1px !important;
+    border-inline-start-color: var(--border) !important;
     font-size: 0.875rem !important;
     line-height: 1.55 !important;
   }
@@ -408,7 +402,7 @@
     left: 0;
     top: 0.35rem;
     margin: 0 !important;
-    accent-color: var(--nil-green);
+    accent-color: var(--foreground);
     cursor: pointer;
   }
 
@@ -454,28 +448,10 @@
     vertical-align: -0.25em;
   }
 
-  .nil-checklist :where(li blockquote):not(:where([class~="not-prose"] *)) {
-    margin: 0.75rem 0 0 !important;
-    padding: 1rem 0.875rem 0.75rem !important;
-    border: none !important;
-    border-radius: 0.5rem !important;
-    background: var(--nil-green-soft) !important;
-    color: color-mix(in oklch, var(--foreground) 88%, transparent) !important;
-    font-size: 0.875rem !important;
-    line-height: 1.5 !important;
-  }
-
-  .nil-checklist :where(li blockquote strong):not(:where([class~="not-prose"] *)) {
-    color: inherit !important;
-    font-weight: 600;
-  }
-
   .nil-checklist :where(li > p em):not(:where([class~="not-prose"] *)),
   .nil-checklist :where(li > em):not(:where([class~="not-prose"] *)) {
     @apply block text-sm not-italic leading-relaxed text-muted-foreground;
     margin: 0.125rem 0 0;
-    padding-left: 0.75rem;
-    border-left: 1px solid var(--border);
   }
 
   .nil-checklist p.nil-checklist-sub-item > em.nil-strike-animate {
@@ -495,10 +471,7 @@
   }
 
   .dark .nil-checklist {
-    --nil-green: oklch(0.45 0.09 155);
-    --nil-green-soft: oklch(0.45 0.09 155 / 22%);
-    --nil-pro-red: oklch(0.65 0.14 25);
-    --nil-pro-soft: oklch(0.65 0.14 25 / 18%);
+    --nil-pro-accent: oklch(0.84 0.13 88);
   }
 
 }
