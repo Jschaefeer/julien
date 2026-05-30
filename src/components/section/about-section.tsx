@@ -182,7 +182,15 @@ function SportsEntry({
   logoClassName,
   logoImageClassName,
   delay,
-}: (typeof DATA.sports)[number] & { delay: number }) {
+}: {
+  name: string;
+  detail: string;
+  logo: string;
+  logoFill?: string;
+  logoClassName?: string;
+  logoImageClassName?: string;
+  delay: number;
+}) {
   return (
     <BlurFade delay={delay}>
       <article className="flex gap-3 sm:gap-4">
