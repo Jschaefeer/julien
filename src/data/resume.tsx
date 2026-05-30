@@ -1,4 +1,4 @@
-import { HomeIcon, MailIcon, NotebookIcon } from "lucide-react";
+import { HomeIcon, NotebookIcon, UserIcon } from "lucide-react";
 
 export const DATA = {
   name: "Julian Palmer",
@@ -65,7 +65,7 @@ export const DATA = {
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
     { href: "/resources", icon: NotebookIcon, label: "Resources" },
-    { href: "mailto:jpalmer413@outlook.com", icon: MailIcon, label: "Contact" },
+    { href: "#", icon: UserIcon, label: "Contact" },
   ],
   featuredContent: {
     title: "The NIL Dispatch",
@@ -93,5 +93,7 @@ export const DATA = {
   ],
   contact: {
     email: "jpalmer413@outlook.com",
+    linkedin: "https://www.linkedin.com/in/julian-palmer/",
+    instagram: "https://www.instagram.com/jpalm3r/",
   },
 } as const;

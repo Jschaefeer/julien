@@ -53,9 +53,11 @@ const Dock = ({ className, children, magnification = DEFAULT_MAGNIFICATION, dist
   return (
     <DockContext.Provider value={{ mouseX, magnification, distance, canHover }}>
       <motion.div
+        layout
+        transition={{ type: "spring", stiffness: 360, damping: 36, mass: 0.95 }}
         onMouseMove={canHover ? (e) => mouseX.set(e.pageX) : undefined}
         onMouseLeave={canHover ? () => mouseX.set(Infinity) : undefined}
-        className={cn("mx-auto w-max h-full flex items-end justify-center overflow-visible rounded-full border", className)}
+        className={cn("mx-auto w-max flex items-end justify-center overflow-visible rounded-full border", className)}
       >
         {children}
       </motion.div>
@@ -112,12 +114,20 @@ const AnimatedDockIcon = ({ className, children }: DockIconProps) => {
     useTransform(distanceCalc, [-distance, 0, distance], [BASE_ICON_SIZE, magnification * ICON_SIZE_RATIO, BASE_ICON_SIZE]),
     SPRING
   );
+  const zIndex = useTransform(
+    distanceCalc,
+    [-distance, 0, distance],
+    [1, 20, 1]
+  );
 
   return (
     <motion.div
       ref={ref}
-      style={{ width: containerSize, height: containerSize }}
-      className={cn("relative flex aspect-square items-center justify-center rounded-full shrink-0", className)}
+      style={{ width: containerSize, height: containerSize, zIndex }}
+      className={cn(
+        "relative flex aspect-square items-center justify-center rounded-full shrink-0 self-end",
+        className
+      )}
     >
       <motion.div
         style={{ width: iconSize, height: iconSize }}

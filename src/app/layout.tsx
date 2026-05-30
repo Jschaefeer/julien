@@ -67,6 +67,10 @@ export default function RootLayout({
               {children}
               <Footer />
             </div>
+            <div
+              aria-hidden
+              className="pointer-events-none fixed inset-x-0 bottom-0 z-20 h-24 bg-gradient-to-t from-background to-transparent"
+            />
             <Navbar />
           </TooltipProvider>
         </ThemeProvider>

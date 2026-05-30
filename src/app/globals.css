@@ -367,6 +367,14 @@
     @apply w-full list-none! pl-0!;
   }
 
+  .nil-checklist :where(ul:not(.contains-task-list)):not(:where([class~="not-prose"] *)) {
+    @apply w-full list-none! pl-0!;
+  }
+
+  .nil-checklist :where(ul:not(.contains-task-list) > li):not(:where([class~="not-prose"] *)) {
+    @apply my-3 pl-0;
+  }
+
   .nil-checklist :where(li.task-list-item):not(:where([class~="not-prose"] *)) {
     position: relative;
     margin-block: 0.75rem;
@@ -446,6 +454,20 @@
   .nil-checklist :where(li.task-list-item .brand-logo):not(:where([class~="not-prose"] *)) {
     margin-right: 0.5rem;
     vertical-align: -0.25em;
+  }
+
+  .nil-checklist :where(p.nil-checklist-sub-item):not(:where([class~="not-prose"] *)) {
+    margin: 0.125rem 0 0 !important;
+    padding-left: 2.5rem;
+  }
+
+  .nil-checklist
+    :where(p.nil-checklist-task-line + p.nil-checklist-sub-item):not(:where([class~="not-prose"] *)) {
+    margin-top: 0.25rem !important;
+  }
+
+  .nil-checklist :where(p.nil-checklist-sub-item + p.nil-checklist-sub-item):not(:where([class~="not-prose"] *)) {
+    margin-top: 0.0625rem !important;
   }
 
   .nil-checklist :where(li > p em):not(:where([class~="not-prose"] *)),

@@ -144,9 +144,15 @@ function ensureStrikeWrap(host: HTMLElement): void {
 type NilChecklistArticleProps = {
   className?: string;
   children: ReactNode;
+  /** Print sheet: empty checkboxes, no localStorage sync. */
+  printOnly?: boolean;
 };
 
-export function NilChecklistArticle({ className, children }: NilChecklistArticleProps) {
+export function NilChecklistArticle({
+  className,
+  children,
+  printOnly = false,
+}: NilChecklistArticleProps) {
   const ref = useRef<HTMLElement>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -155,7 +161,7 @@ export function NilChecklistArticle({ className, children }: NilChecklistArticle
 
     root.classList.add("nil-checklist-skip-strike-animation");
 
-    const saved = readSavedState();
+    const saved = printOnly ? {} : readSavedState();
     const checkboxes = Array.from(
       root.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')
     );
@@ -203,9 +209,14 @@ export function NilChecklistArticle({ className, children }: NilChecklistArticle
       }
       markSubItems(checkbox);
 
-      if (saved[id]) {
+      if (!printOnly && saved[id]) {
         checkbox.checked = true;
         setItemChecked(checkbox, true);
+      }
+
+      if (printOnly) {
+        checkbox.checked = false;
+        continue;
       }
 
       const syncChecked = () => {
@@ -259,7 +270,7 @@ export function NilChecklistArticle({ className, children }: NilChecklistArticle
         .querySelectorAll(".nil-checklist-sub-item")
         .forEach((el) => el.classList.remove("nil-checklist-sub-item"));
     };
-  }, []);
+  }, [printOnly]);
 
   return (
     <article ref={ref} className={className}>
