@@ -3,6 +3,12 @@
 import { AnimatePresence, motion, useInView, Variants } from "motion/react";
 import { useRef } from "react";
 
+import {
+  BLUR_FADE_BLUR,
+  BLUR_FADE_Y_OFFSET,
+  blurFadeTransition,
+} from "@/lib/blur-fade";
+
 interface BlurFadeProps {
   children: React.ReactNode;
   className?: string;
@@ -21,12 +27,12 @@ const BlurFade = ({
   children,
   className,
   variant,
-  duration = 0.4,
+  duration,
   delay = 0,
-  yOffset = 6,
+  yOffset = BLUR_FADE_Y_OFFSET,
   inView = false,
   inViewMargin = "-50px",
-  blur = "6px",
+  blur = BLUR_FADE_BLUR,
 }: BlurFadeProps) => {
   const ref = useRef(null);
   const inViewResult = useInView(ref, {
@@ -48,9 +54,8 @@ const BlurFade = ({
         exit="hidden"
         variants={combinedVariants}
         transition={{
-          delay: 0.04 + delay,
-          duration,
-          ease: "easeOut",
+          ...blurFadeTransition(delay),
+          ...(duration !== undefined ? { duration } : {}),
         }}
         className={className}
       >

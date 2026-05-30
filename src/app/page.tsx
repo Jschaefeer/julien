@@ -3,14 +3,16 @@ import BlurFadeText from "@/components/magicui/blur-fade-text";
 import ExpandableAvatar from "@/components/expandable-avatar";
 import { Badge } from "@/components/ui/badge";
 import { DATA } from "@/data/resume";
+import {
+  AboutIntroSection,
+  ExperienceEducationSection,
+} from "@/components/section/about-section";
 import FeaturedResourcesSection from "@/components/section/featured-resources-section";
-import Markdown from "react-markdown";
-
-const BLUR_FADE_DELAY = 0.04;
+import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
 
 export default function Page() {
   return (
-    <main className="min-h-dvh flex flex-col gap-14 relative">
+    <main className="flex flex-col gap-section relative">
       <section id="hero">
         <div className="mx-auto w-full max-w-2xl space-y-8">
           <div className="flex flex-row items-start justify-between gap-3 md:gap-4">
@@ -39,7 +41,7 @@ export default function Page() {
             <BlurFade delay={BLUR_FADE_DELAY} className="shrink-0">
               <ExpandableAvatar
                 alt={DATA.name}
-                src={DATA.avatarUrl}
+                srcs={DATA.avatarUrls}
                 initials={DATA.initials}
               />
             </BlurFade>
@@ -47,20 +49,11 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="about">
-        <div className="flex min-h-0 flex-col gap-y-4">
-          <BlurFade delay={BLUR_FADE_DELAY * 3}>
-            <h2 className="text-xl font-bold">About</h2>
-          </BlurFade>
-          <BlurFade delay={BLUR_FADE_DELAY * 4}>
-            <div className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
-              <Markdown>{DATA.summary}</Markdown>
-            </div>
-          </BlurFade>
-        </div>
-      </section>
+      <AboutIntroSection />
 
       <FeaturedResourcesSection />
+
+      <ExperienceEducationSection />
     </main>
   );
 }

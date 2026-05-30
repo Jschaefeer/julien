@@ -3,8 +3,12 @@
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant can-hover (@media (hover: hover) and (pointer: fine));
 
 @theme inline {
+  --spacing-section: 3.5rem;
+  --spacing-section-header: 0.75rem;
+  --spacing-section-hero-pull: 1.75rem;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -43,6 +47,7 @@
 }
 
 :root {
+  color-scheme: light;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -78,6 +83,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --background: oklch(0.18 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -205,11 +211,24 @@
     @apply mt-0!;
   }
 
-  .prose :where(ul):not(:where([class~="not-prose"] *)) {
+  /* Task lists (remark-gfm): checkboxes only — no list markers */
+  .prose :where(ul.contains-task-list):not(:where([class~="not-prose"] *)) {
+    @apply list-none! pl-0!;
+  }
+
+  .prose :where(li.task-list-item):not(:where([class~="not-prose"] *)) {
+    @apply list-none! my-1.5 pl-0!;
+  }
+
+  .prose :where(li.task-list-item > input[type="checkbox"]):not(:where([class~="not-prose"] *)) {
+    @apply mr-2 mt-1 shrink-0 accent-primary;
+  }
+
+  .prose :where(ul:not(.contains-task-list)):not(:where([class~="not-prose"] *)) {
     @apply pl-5!;
   }
 
-  .prose :where(ul > li):not(:where([class~="not-prose"] *)) {
+  .prose :where(ul:not(.contains-task-list) > li):not(:where([class~="not-prose"] *)) {
     @apply my-1.5 pl-1 marker:text-muted-foreground;
   }
 
@@ -243,6 +262,106 @@
 
   .prose :where(tbody tr:last-child td):not(:where([class~="not-prose"] *)) {
     @apply border-b-0;
+  }
+
+  .table-fullscreen-view {
+    max-width: none !important;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-fullscreen-view table {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: auto;
+  }
+
+  .table-fullscreen-view th,
+  .table-fullscreen-view td {
+    white-space: nowrap;
+    vertical-align: top;
+    padding: 0.875rem 1rem;
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .table-fullscreen-view th {
+    @apply text-left font-semibold text-foreground border-b border-border bg-muted/50;
+  }
+
+  .table-fullscreen-view td {
+    @apply text-muted-foreground border-b border-border;
+  }
+
+  .table-fullscreen-view th:not(:last-child),
+  .table-fullscreen-view td:not(:last-child) {
+    @apply border-r border-border;
+  }
+
+  .table-fullscreen-view tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .table-fullscreen-view tr {
+    @apply h-auto cursor-default;
+  }
+
+  .table-fullscreen-view tr:hover {
+    @apply bg-accent/50;
+  }
+
+  .print-only {
+    display: none;
+  }
+
+  /* NIL Dispatch checklist — screen */
+  .nil-checklist {
+    --nil-green: oklch(0.32 0.07 155);
+    --nil-pro-red: oklch(0.48 0.18 25);
+  }
+
+  .nil-checklist :where(h2):not(:where([class~="not-prose"] *)) {
+    @apply mt-10 mb-5 rounded-lg px-4 py-3 text-lg! font-serif! font-semibold! tracking-tight! text-white!;
+    background: var(--nil-green);
+    box-shadow: 0 1px 0 oklch(0.2 0.04 155 / 40%);
+  }
+
+  .nil-checklist :where(h2):first-of-type {
+    @apply mt-2!;
+  }
+
+  .nil-checklist :where(h3:not(:has(+ blockquote))):not(:where([class~="not-prose"] *)) {
+    @apply mt-6 mb-3 border-b border-border pb-2 text-xs! font-semibold! uppercase tracking-[0.14em] text-foreground/80!;
+  }
+
+  .nil-checklist :where(h3:has(+ blockquote)):not(:where([class~="not-prose"] *)) {
+    @apply mt-5 mb-2 border-0 pb-0 text-[0.7rem]! font-semibold! normal-case tracking-normal;
+    color: var(--nil-pro-red) !important;
+  }
+
+  .nil-checklist :where(h3 + blockquote):not(:where([class~="not-prose"] *)) {
+    color: var(--nil-pro-red) !important;
+  }
+
+  .nil-checklist :where(h3 + blockquote p):not(:where([class~="not-prose"] *)) {
+    color: inherit;
+  }
+
+  .nil-checklist :where(hr):not(:where([class~="not-prose"] *)) {
+    @apply my-10 border-border/60;
+  }
+
+  .nil-checklist :where(li > p em):not(:where([class~="not-prose"] *)),
+  .nil-checklist :where(li > em):not(:where([class~="not-prose"] *)) {
+    @apply block pl-6 text-sm not-italic text-muted-foreground;
+  }
+
+  .dark .nil-checklist {
+    --nil-green: oklch(0.38 0.08 155);
+    --nil-pro-red: oklch(0.62 0.16 25);
   }
 
 }

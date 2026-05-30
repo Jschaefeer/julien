@@ -3,6 +3,7 @@ import { allPosts } from "content-collections";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { paginate, normalizePage } from "@/lib/pagination";
+import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -23,7 +24,6 @@ export const metadata: Metadata = {
 };
 
 const PAGE_SIZE = 5;
-const BLUR_FADE_DELAY = 0.04;
 
 export default async function ResourcesPage({
   searchParams,

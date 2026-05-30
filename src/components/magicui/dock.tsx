@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion, type MotionValue, useMotionValue, useSpring, useTransform } from "motion/react";
-import { createContext, useContext, useRef, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 
 interface DockProps {
   className?: string;
@@ -27,18 +27,34 @@ interface DockContextValue {
   mouseX: MotionValue<number>;
   magnification: number;
   distance: number;
+  canHover: boolean;
+}
+
+function useCanHover() {
+  const [canHover, setCanHover] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    setCanHover(mq.matches);
+    const onChange = (event: MediaQueryListEvent) => setCanHover(event.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  return canHover;
 }
 
 const DockContext = createContext<DockContextValue | null>(null);
 
 const Dock = ({ className, children, magnification = DEFAULT_MAGNIFICATION, distance = DEFAULT_DISTANCE }: DockProps) => {
   const mouseX = useMotionValue(Infinity);
+  const canHover = useCanHover();
 
   return (
-    <DockContext.Provider value={{ mouseX, magnification, distance }}>
+    <DockContext.Provider value={{ mouseX, magnification, distance, canHover }}>
       <motion.div
-        onMouseMove={(e) => mouseX.set(e.pageX)}
-        onMouseLeave={() => mouseX.set(Infinity)}
+        onMouseMove={canHover ? (e) => mouseX.set(e.pageX) : undefined}
+        onMouseLeave={canHover ? () => mouseX.set(Infinity) : undefined}
         className={cn("mx-auto w-max h-full flex items-end justify-center overflow-visible rounded-full border", className)}
       >
         {children}
@@ -48,6 +64,32 @@ const Dock = ({ className, children, magnification = DEFAULT_MAGNIFICATION, dist
 };
 
 const DockIcon = ({ className, children }: DockIconProps) => {
+  const context = useContext(DockContext);
+
+  if (!context) {
+    throw new Error("DockIcon must be used within a Dock component");
+  }
+
+  if (!context.canHover) {
+    return (
+      <div
+        style={{ width: BASE_SIZE, height: BASE_SIZE }}
+        className={cn("relative flex aspect-square items-center justify-center rounded-full shrink-0", className)}
+      >
+        <div
+          style={{ width: BASE_ICON_SIZE, height: BASE_ICON_SIZE }}
+          className="flex items-center justify-center"
+        >
+          {children}
+        </div>
+      </div>
+    );
+  }
+
+  return <AnimatedDockIcon className={className}>{children}</AnimatedDockIcon>;
+};
+
+const AnimatedDockIcon = ({ className, children }: DockIconProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const context = useContext(DockContext);
 

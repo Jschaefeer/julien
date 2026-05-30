@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "./nil-print-sheet.css";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -70,7 +71,7 @@ export default function RootLayout({
           geistMono.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="light">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <TooltipProvider delayDuration={0}>
             <div className="max-w-2xl mx-auto py-12 pb-24 sm:py-24 px-6">
               {children}

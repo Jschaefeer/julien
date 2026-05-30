@@ -1,5 +1,6 @@
 import { CodeBlock } from "@/components/mdx/code-block";
 import { BrandHeading } from "@/components/mdx/brand-heading";
+import { ExpandableTable } from "@/components/mdx/expandable-table";
 import { MediaContainer } from "@/components/mdx/media-container";
 import type { ComponentProps } from "react";
 
@@ -25,16 +26,7 @@ export const mdxComponents = {
       />
     </div>
   ),
-  table: (props: ComponentProps<"table">) => (
-    <div className="my-6 border border-border rounded-xl overflow-hidden">
-      <div className="w-full overflow-x-auto">
-        <table
-          className="m-0! w-full min-w-full border-separate border-spacing-0"
-          {...props}
-        />
-      </div>
-    </div>
-  ),
+  table: (props: ComponentProps<"table">) => <ExpandableTable {...props} />,
   code: ({ children, ...props }: CodeProps) => {
     if (props["data-language"]) {
       return <code {...props}>{children}</code>;
