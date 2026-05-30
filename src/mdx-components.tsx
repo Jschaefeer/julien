@@ -1,5 +1,6 @@
 import { CodeBlock } from "@/components/mdx/code-block";
 import { BrandHeading } from "@/components/mdx/brand-heading";
+import { BrandLogo } from "@/components/mdx/brand-logo";
 import { ExpandableTable } from "@/components/mdx/expandable-table";
 import { MediaContainer } from "@/components/mdx/media-container";
 import type { ComponentProps } from "react";
@@ -10,6 +11,7 @@ type CodeProps = ComponentProps<"code"> & {
 
 export const mdxComponents = {
   BrandHeading,
+  BrandLogo,
   MediaContainer,
   h1: () => null,
   pre: (props: ComponentProps<"pre">) => <CodeBlock {...props} />,

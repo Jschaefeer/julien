@@ -317,51 +317,188 @@
     display: none;
   }
 
-  /* NIL Dispatch checklist — screen */
+  /* NIL Dispatch — editorial checklist (screen) */
   .nil-checklist {
     --nil-green: oklch(0.32 0.07 155);
+    --nil-green-soft: oklch(0.32 0.07 155 / 14%);
     --nil-pro-red: oklch(0.48 0.18 25);
+    --nil-pro-soft: oklch(0.48 0.18 25 / 12%);
+    --nil-strike-color: color-mix(in oklch, var(--muted-foreground) 55%, transparent);
+  }
+
+  .nil-checklist :where(> p:first-of-type strong):not(:where([class~="not-prose"] *)) {
+    @apply mb-8 block text-sm font-medium tracking-wide text-muted-foreground;
   }
 
   .nil-checklist :where(h2):not(:where([class~="not-prose"] *)) {
-    @apply mt-10 mb-5 rounded-lg px-4 py-3 text-lg! font-serif! font-semibold! tracking-tight! text-white!;
+    @apply mt-12 mb-6 rounded-md px-4 py-3 text-lg! font-serif! font-semibold! tracking-tight! text-white!;
     background: var(--nil-green);
-    box-shadow: 0 1px 0 oklch(0.2 0.04 155 / 40%);
   }
 
   .nil-checklist :where(h2):first-of-type {
-    @apply mt-2!;
+    @apply mt-4!;
   }
 
   .nil-checklist :where(h3:not(:has(+ blockquote))):not(:where([class~="not-prose"] *)) {
-    @apply mt-6 mb-3 border-b border-border pb-2 text-xs! font-semibold! uppercase tracking-[0.14em] text-foreground/80!;
+    @apply mt-8 mb-3 text-xs! font-semibold! uppercase tracking-[0.14em] text-muted-foreground!;
   }
 
   .nil-checklist :where(h3:has(+ blockquote)):not(:where([class~="not-prose"] *)) {
-    @apply mt-5 mb-2 border-0 pb-0 text-[0.7rem]! font-semibold! normal-case tracking-normal;
+    @apply mt-8 mb-2 text-sm! font-semibold! normal-case tracking-normal;
     color: var(--nil-pro-red) !important;
   }
 
   .nil-checklist :where(h3 + blockquote):not(:where([class~="not-prose"] *)) {
+    margin: 0 0 2rem !important;
+    padding: 0.875rem 1rem !important;
+    border: none !important;
+    border-radius: 0.5rem !important;
+    background: var(--nil-pro-soft) !important;
     color: var(--nil-pro-red) !important;
+    font-size: 0.875rem !important;
+    line-height: 1.55 !important;
   }
 
   .nil-checklist :where(h3 + blockquote p):not(:where([class~="not-prose"] *)) {
+    margin: 0 !important;
     color: inherit;
   }
 
   .nil-checklist :where(hr):not(:where([class~="not-prose"] *)) {
-    @apply my-10 border-border/60;
+    @apply my-12 border-0;
+    height: 0;
+  }
+
+  .nil-checklist :where(ul.contains-task-list):not(:where([class~="not-prose"] *)) {
+    @apply w-full list-none! pl-0!;
+  }
+
+  .nil-checklist :where(li.task-list-item):not(:where([class~="not-prose"] *)) {
+    position: relative;
+    margin-block: 0.75rem;
+    width: 100%;
+  }
+
+  .nil-checklist :where(li.task-list-item:has(> input[type="checkbox"])):not(:where([class~="not-prose"] *)) {
+    padding-left: 1.75rem !important;
+  }
+
+  .nil-checklist :where(li.task-list-item > label):not(:where([class~="not-prose"] *)) {
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nil-checklist :where(li.task-list-item > p):not(:where([class~="not-prose"] *)) {
+    position: relative;
+    margin: 0 !important;
+  }
+
+  .nil-checklist
+    :where(li.task-list-item > p:has(> input[type="checkbox"])):not(:where([class~="not-prose"] *)),
+  .nil-checklist :where(li.task-list-item.nil-checklist-row):not(:where([class~="not-prose"] *)) {
+    display: block !important;
+    padding-left: 1.75rem !important;
+    cursor: pointer;
+  }
+
+  .nil-checklist :where(li.task-list-item > p > input[type="checkbox"]):not(:where([class~="not-prose"] *)),
+  .nil-checklist :where(li.task-list-item > input[type="checkbox"]):not(:where([class~="not-prose"] *)) {
+    position: absolute !important;
+    left: 0;
+    top: 0.35rem;
+    margin: 0 !important;
+    accent-color: var(--nil-green);
+    cursor: pointer;
+  }
+
+  .nil-checklist :where(li.task-list-item > input[type="checkbox"]):not(:where([class~="not-prose"] *)) {
+    margin-right: 0.5rem !important;
+  }
+
+  .nil-checklist :where(.nil-checklist-task-line):not(:where([class~="not-prose"] *)) {
+    transition: color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .nil-checklist .nil-strike-animate {
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    background-image: linear-gradient(var(--nil-strike-color), var(--nil-strike-color));
+    background-position: 0 50%;
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    transition: background-size 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .nil-checklist li.task-list-item[data-checked] .nil-strike-animate {
+    background-size: 100% 1px;
+  }
+
+  .nil-checklist.nil-checklist-skip-strike-animation li.task-list-item[data-checked] .nil-strike-animate {
+    transition: none;
+    background-size: 100% 1px;
+  }
+
+  .nil-checklist
+    :where(
+      li.task-list-item[data-checked] > p.nil-checklist-task-line,
+      li.task-list-item[data-checked] p.nil-checklist-sub-item,
+      li.task-list-item[data-checked].nil-checklist-task-line
+    ):not(:where([class~="not-prose"] *)) {
+    color: color-mix(in oklch, var(--muted-foreground) 72%, transparent);
+    opacity: 0.78;
+  }
+
+  .nil-checklist :where(li.task-list-item .brand-logo):not(:where([class~="not-prose"] *)) {
+    margin-right: 0.5rem;
+    vertical-align: -0.25em;
+  }
+
+  .nil-checklist :where(li blockquote):not(:where([class~="not-prose"] *)) {
+    margin: 0.75rem 0 0 !important;
+    padding: 1rem 0.875rem 0.75rem !important;
+    border: none !important;
+    border-radius: 0.5rem !important;
+    background: var(--nil-green-soft) !important;
+    color: color-mix(in oklch, var(--foreground) 88%, transparent) !important;
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .nil-checklist :where(li blockquote strong):not(:where([class~="not-prose"] *)) {
+    color: inherit !important;
+    font-weight: 600;
   }
 
   .nil-checklist :where(li > p em):not(:where([class~="not-prose"] *)),
   .nil-checklist :where(li > em):not(:where([class~="not-prose"] *)) {
-    @apply block pl-6 text-sm not-italic text-muted-foreground;
+    @apply block text-sm not-italic leading-relaxed text-muted-foreground;
+    margin: 0.125rem 0 0;
+    padding-left: 0.75rem;
+    border-left: 1px solid var(--border);
+  }
+
+  .nil-checklist p.nil-checklist-sub-item > em.nil-strike-animate {
+    display: inline-block;
+    width: auto;
+    max-width: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nil-checklist .nil-strike-animate {
+      transition-duration: 0.01ms;
+    }
+  }
+
+  .nil-checklist :where(> p:last-of-type em):not(:where([class~="not-prose"] *)) {
+    @apply mt-12 block text-sm leading-relaxed text-muted-foreground;
   }
 
   .dark .nil-checklist {
-    --nil-green: oklch(0.38 0.08 155);
-    --nil-pro-red: oklch(0.62 0.16 25);
+    --nil-green: oklch(0.45 0.09 155);
+    --nil-green-soft: oklch(0.45 0.09 155 / 22%);
+    --nil-pro-red: oklch(0.65 0.14 25);
+    --nil-pro-soft: oklch(0.65 0.14 25 / 18%);
   }
 
 }

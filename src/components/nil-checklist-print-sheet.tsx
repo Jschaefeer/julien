@@ -224,7 +224,7 @@ export function NilChecklistPrintSheet({ author }: NilChecklistPrintSheetProps) 
         </PrintCol>
 
         <PrintCol>
-          <Section title="#'s That Follow You: Credit & Team">
+          <Section title="Numbers That Follow You: Credit & Team">
             <Sub title="7th: Build Credit Now">
               <Item realTalk={"A lot of people like to say: \"Don't worry, you are young, you have time.\" That is utter bullsh*t."}>
                 Open a credit card. Use it. Pay it off in full every month.

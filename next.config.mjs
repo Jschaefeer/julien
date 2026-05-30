@@ -3,7 +3,7 @@ import { withContentCollections } from "@content-collections/next";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  allowedDevOrigins: ["*.trycloudflare.com"],
+  allowedDevOrigins: ["*.trycloudflare.com", "192.168.1.86"],
   async redirects() {
     return [
       {

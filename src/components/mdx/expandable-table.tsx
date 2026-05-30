@@ -178,6 +178,7 @@ export function ExpandableTable(props: ComponentProps<"table">) {
   const isExitingRef = useRef(false);
   const [open, setOpen] = useState(false);
   const [showInline, setShowInline] = useState(true);
+  const [showInlineBorder, setShowInlineBorder] = useState(true);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -200,6 +201,7 @@ export function ExpandableTable(props: ComponentProps<"table">) {
     if (!captureRects()) return;
     scrollPosRef.current = readScroll(inlineScrollRef.current);
     isExitingRef.current = false;
+    setShowInlineBorder(false);
     setShowInline(false);
     setOpen(true);
   }, [captureRects]);
@@ -248,6 +250,7 @@ export function ExpandableTable(props: ComponentProps<"table">) {
   const handleExitComplete = useCallback(() => {
     isExitingRef.current = false;
     setShowInline(true);
+    setShowInlineBorder(true);
   }, []);
 
   useEffect(() => {
@@ -361,17 +364,21 @@ export function ExpandableTable(props: ComponentProps<"table">) {
 
         <div
           ref={containerRef}
-          aria-hidden={!showInline}
           className={cn(
-            "table-fullscreen-view overflow-hidden rounded-xl border border-border bg-background",
-            !showInline && "invisible pointer-events-none"
+            "table-fullscreen-view overflow-hidden rounded-xl border bg-background",
+            showInlineBorder ? "border-border" : "border-transparent"
           )}
         >
-          <TableContent
-            scrollRef={inlineScrollRef}
-            minWidth={rectsRef.current?.tableMinWidth}
-            {...props}
-          />
+          <div
+            aria-hidden={!showInline}
+            className={cn(!showInline && "invisible pointer-events-none")}
+          >
+            <TableContent
+              scrollRef={inlineScrollRef}
+              minWidth={rectsRef.current?.tableMinWidth}
+              {...props}
+            />
+          </div>
         </div>
       </div>
       {overlay}

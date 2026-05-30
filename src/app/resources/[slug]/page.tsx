@@ -1,5 +1,7 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import { ChecklistPrintButton } from "@/components/checklist-print-button";
+import { NilChecklistArticle } from "@/components/nil-checklist-article";
+import { NilChecklistInput } from "@/components/mdx/nil-checklist-input";
 import { NilChecklistPrintSheet } from "@/components/nil-checklist-print-sheet";
 import { allPosts } from "content-collections";
 import { DATA } from "@/data/resume";
@@ -147,15 +149,18 @@ export default async function ResourcePage({
         <NilChecklistPrintSheet author={DATA.fullName} />
       ) : null}
       <BlurFade delay={BLUR_FADE_DELAY * 2}>
-        <article
-          className={
-            isNilChecklist
-              ? "no-print nil-checklist prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert mt-6"
-              : "prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert mt-6"
-          }
-        >
-          <MDXContent code={post.mdx} components={mdxComponents} />
-        </article>
+        {isNilChecklist ? (
+          <NilChecklistArticle className="no-print nil-checklist prose w-full max-w-3xl text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert mt-6">
+            <MDXContent
+              code={post.mdx}
+              components={{ ...mdxComponents, input: NilChecklistInput }}
+            />
+          </NilChecklistArticle>
+        ) : (
+          <article className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert mt-6">
+            <MDXContent code={post.mdx} components={mdxComponents} />
+          </article>
+        )}
       </BlurFade>
 
       <BlurFade delay={BLUR_FADE_DELAY * 3}>
