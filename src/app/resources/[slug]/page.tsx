@@ -1,15 +1,16 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import { ChecklistPrintButton } from "@/components/checklist-print-button";
+import { JsonLd } from "@/components/json-ld";
 import { NilChecklistArticle } from "@/components/nil-checklist-article";
 import { NilChecklistInput } from "@/components/mdx/nil-checklist-input";
 import { NilChecklistPrintSheet } from "@/components/nil-checklist-print-sheet";
 import { allPosts } from "content-collections";
-import { DATA } from "@/data/resume";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MDXContent } from "@content-collections/mdx/react";
 import { mdxComponents } from "@/mdx-components";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
+import { createArticleJsonLd, createMetadata, getResourceSlug } from "@/lib/seo";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -24,7 +25,7 @@ function getSortedPosts() {
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
-    slug: post._meta.path.replace(/\.mdx$/, ""),
+    slug: getResourceSlug(post._meta.path),
   }));
 }
 
@@ -36,46 +37,23 @@ export async function generateMetadata({
   }>;
 }): Promise<Metadata | undefined> {
   const { slug } = await params;
-  const post = allPosts.find((p) => p._meta.path.replace(/\.mdx$/, "") === slug);
+  const post = allPosts.find((p) => getResourceSlug(p._meta.path) === slug);
 
   if (!post) {
     return undefined;
   }
 
-  let {
-    title,
-    publishedAt: publishedTime,
-    summary: description,
-    image,
-  } = post;
+  const { title, publishedAt, updatedAt, summary: description, image } = post;
 
-  return {
+  return createMetadata({
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      type: "article",
-      publishedTime,
-      url: `${DATA.url}/resources/${slug}`,
-      ...(image && {
-        images: [
-          {
-            url: image,
-            alt: title,
-          },
-        ],
-      }),
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      ...(image && {
-        images: [image],
-      }),
-    },
-  };
+    path: `/resources/${slug}`,
+    type: "article",
+    publishedTime: publishedAt,
+    modifiedTime: updatedAt ?? publishedAt,
+    image: image ?? `/resources/${slug}/opengraph-image`,
+  });
 }
 
 export default async function ResourcePage({
@@ -104,31 +82,17 @@ export default async function ResourcePage({
 
   const isNilChecklist = slug === "nil-dispatch";
 
-  const jsonLdContent = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.title,
-    datePublished: post.publishedAt,
-    dateModified: post.publishedAt,
-    description: post.summary,
-    image: post.image
-      ? `${DATA.url}${post.image}`
-      : `${DATA.url}/resources/${slug}/opengraph-image`,
-    url: `${DATA.url}/resources/${slug}`,
-    author: {
-      "@type": "Person",
-      name: DATA.name,
-    },
-  }).replace(/</g, "\\u003c");
-
   return (
     <section id="resources">
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: jsonLdContent,
-        }}
+      <JsonLd
+        data={createArticleJsonLd({
+          title: post.title,
+          description: post.summary,
+          slug,
+          publishedAt: post.publishedAt,
+          updatedAt: post.updatedAt,
+          image: post.image,
+        })}
       />
       <BlurFade delay={0}>
         <div className="no-print flex justify-start gap-4 items-center">

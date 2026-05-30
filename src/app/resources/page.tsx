@@ -5,27 +5,32 @@ import type { Metadata } from "next";
 import { paginate, normalizePage } from "@/lib/pagination";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Resources",
-  description:
-    "NIL financial literacy guides, flyers, and content for college athletes.",
-  openGraph: {
-    title: "Resources",
-    description:
-      "NIL financial literacy guides, flyers, and content for college athletes.",
-    images: [{ url: "/opengraph-image" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Resources",
-    description:
-      "NIL financial literacy guides, flyers, and content for college athletes.",
-    images: ["/opengraph-image"],
-  },
-};
+import { createMetadata } from "@/lib/seo";
 
 const PAGE_SIZE = 5;
+
+const resourcesDescription =
+  "NIL financial literacy guides, checklists, and money management content for college athletes navigating Name, Image, and Likeness deals.";
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}): Promise<Metadata> {
+  const { page: pageParam } = await searchParams;
+  const totalPages = Math.ceil(allPosts.length / PAGE_SIZE);
+  const currentPage = normalizePage(pageParam, totalPages);
+  const title =
+    currentPage > 1 ? `Resources (Page ${currentPage})` : "Resources";
+  const path =
+    currentPage > 1 ? `/resources?page=${currentPage}` : "/resources";
+
+  return createMetadata({
+    title,
+    description: resourcesDescription,
+    path,
+  });
+}
 
 export default async function ResourcesPage({
   searchParams,
@@ -106,7 +111,10 @@ export default async function ResourcesPage({
 
           {pagination.totalPages > 1 && (
             <BlurFade delay={BLUR_FADE_DELAY * 4}>
-              <div className="flex gap-3 flex-row items-center justify-between mt-8">
+              <nav
+                aria-label="Resources pagination"
+                className="flex gap-3 flex-row items-center justify-between mt-8"
+              >
                 <div className="text-sm text-muted-foreground">
                   Page {pagination.page} of {pagination.totalPages}
                 </div>
@@ -136,7 +144,7 @@ export default async function ResourcesPage({
                     </span>
                   )}
                 </div>
-              </div>
+              </nav>
             </BlurFade>
           )}
         </>

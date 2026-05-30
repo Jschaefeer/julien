@@ -12,6 +12,7 @@ import {
   Briefcase,
   Calendar,
   GraduationCap,
+  Trophy,
   type LucideIcon,
 } from "lucide-react";
 
@@ -43,6 +44,7 @@ function EntryLogo({
   wide,
   fillColor,
   className,
+  imageClassName,
 }: {
   src?: string;
   alt: string;
@@ -50,6 +52,7 @@ function EntryLogo({
   wide?: boolean;
   fillColor?: string;
   className?: string;
+  imageClassName?: string;
 }) {
   const fill = Boolean(fillColor);
 
@@ -79,7 +82,7 @@ function EntryLogo({
           height={40}
           className={cn(
             "size-full",
-            fill ? "object-cover" : "object-contain p-1.5"
+            imageClassName ?? (fill ? "object-cover" : "object-contain p-1.5")
           )}
         />
       ) : (
@@ -171,6 +174,39 @@ function EducationEntry({
   );
 }
 
+function SportsEntry({
+  name,
+  detail,
+  logo,
+  logoFill,
+  logoClassName,
+  logoImageClassName,
+  delay,
+}: (typeof DATA.sports)[number] & { delay: number }) {
+  return (
+    <BlurFade delay={delay}>
+      <article className="flex gap-3 sm:gap-4">
+        <EntryLogo
+          src={logo}
+          alt={name}
+          fallbackIcon={Trophy}
+          fillColor={logoFill}
+          className={logoClassName}
+          imageClassName={logoImageClassName}
+        />
+        <div className="flex min-w-0 flex-1 flex-col gap-2">
+          <div className="space-y-0.5">
+            <h4 className="font-semibold leading-snug tracking-tight">
+              {name}
+            </h4>
+          </div>
+          <MetaItem icon={Calendar}>{detail}</MetaItem>
+        </div>
+      </article>
+    </BlurFade>
+  );
+}
+
 export function AboutIntroSection() {
   return (
     <SectionBlock id="about" className="-mt-section-hero-pull">
@@ -190,6 +226,8 @@ export function ExperienceEducationSection() {
   const experienceStartDelay = BLUR_FADE_DELAY * 7;
   const educationStartDelay =
     experienceStartDelay + DATA.experience.length * BLUR_FADE_DELAY + BLUR_FADE_DELAY;
+  const sportsStartDelay =
+    educationStartDelay + DATA.education.length * BLUR_FADE_DELAY + BLUR_FADE_DELAY;
 
   return (
     <section id="experience">
@@ -222,6 +260,23 @@ export function ExperienceEducationSection() {
                   key={entry.school}
                   {...entry}
                   delay={educationStartDelay + (index + 1) * BLUR_FADE_DELAY}
+                />
+              ))}
+            </div>
+          </SectionContent>
+        </SectionBlock>
+
+        <SectionBlock>
+          <BlurFade delay={sportsStartDelay}>
+            <SectionHeading>Sports</SectionHeading>
+          </BlurFade>
+          <SectionContent>
+            <div className="flex flex-col gap-y-8">
+              {DATA.sports.map((entry, index) => (
+                <SportsEntry
+                  key={entry.name}
+                  {...entry}
+                  delay={sportsStartDelay + (index + 1) * BLUR_FADE_DELAY}
                 />
               ))}
             </div>

@@ -33,7 +33,7 @@ export function FileCabinet() {
           ? DATA.featuredContent.title
           : "All This Money?",
         summary: post.summary,
-        excerpt: extractArticleExcerpt(post.content),
+        excerpt: meta?.description ?? extractArticleExcerpt(post.content),
         label: isFeatured ? DATA.featuredContent.label : resource?.type,
         readTime: meta?.readTime,
         cost: meta?.cost,

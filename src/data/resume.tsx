@@ -7,7 +7,7 @@ export const DATA = {
   url: "https://nilmoneyguide.com",
   tags: ["NIL", "Financial Literacy", "Sports Business", "Content"],
   description:
-    "Help college athletes understand and protect their money.",
+    "Free NIL financial literacy for college athletes. Guides to manage deals, taxes, and protect your money.",
   summary:
     "Julian Palmer creates financial literacy content for college athletes navigating NIL deals, contracts, and sudden income. Through **The NIL Dispatch**, he breaks down money management into clear, actionable guidance so athletes can protect what they earn.",
   education: [
@@ -19,6 +19,21 @@ export const DATA = {
       end: "May 2023",
       logo: "/logos/isenberg.jpg",
       logoFill: "#881c1c",
+    },
+  ],
+  sports: [
+    {
+      name: "New York Knicks",
+      detail: "Lifelong fan",
+      logo: "/logos/knicks.svg",
+      logoFill: "#006BB6",
+      logoImageClassName: "object-contain scale-105",
+    },
+    {
+      name: "New York Yankees",
+      detail: "Lifelong fan",
+      logo: "/logos/yankees.svg",
+      logoClassName: "bg-white dark:bg-white",
     },
   ],
   experience: [
@@ -56,6 +71,8 @@ export const DATA = {
     title: "The NIL Dispatch",
     label: "NIL Guide",
     slug: "nil-dispatch",
+    description:
+      "A step-by-step checklist to track every deal, keep NIL income in a separate account, and set aside 20–30% for taxes before you spend. Covers FDIC insurance, quarterly tax payments, credit basics, and how to vet the CPA, lawyer, and advisor on your team.",
     cost: "Free",
     audience: "NIL Athletes",
     pillars: "5",
@@ -66,7 +83,7 @@ export const DATA = {
       type: "Guide",
       title: "What To Do With All This Money?",
       description:
-        "NIL money management: 5 pillars, 10 minutes, no cost",
+        "Walk through five pillars of NIL money management: what's coming in, where it's going, who handles it, tax obligations, and planning beyond your playing career. Learn to spot bad actors and unqualified advice before they cost you—about ten minutes, zero cost.",
       slug: "what-to-do-with-all-this-money",
       audience: "NIL Athletes",
       pillars: "5",
