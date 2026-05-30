@@ -16,7 +16,7 @@ export const mdxComponents = {
   h1: () => null,
   pre: (props: ComponentProps<"pre">) => <CodeBlock {...props} />,
   hr: (props: ComponentProps<"hr">) => (
-    <div className="my-10 flex w-full items-center" {...props}>
+    <div className="nil-mdx-hr my-10 flex w-full items-center" {...props}>
       <div
         className="flex-1 h-px bg-border"
         style={{

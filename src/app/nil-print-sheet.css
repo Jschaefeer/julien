@@ -115,7 +115,7 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     column-gap: 0.1in;
-    row-gap: 0.1in;
+    row-gap: 0.04in;
     align-items: start;
     max-width: none !important;
     font-size: 6.75pt;
@@ -136,9 +136,12 @@
   }
 
   .nil-print-section-grid .nil-checklist--print > p:first-of-type,
-  .nil-print-section-grid .nil-checklist--print > p:first-of-type + div,
-  .nil-print-section-grid .nil-checklist--print hr {
+  .nil-print-section-grid .nil-checklist--print > p:first-of-type + .nil-mdx-hr,
+  .nil-print-section-grid .nil-checklist--print hr,
+  .nil-print-section .nil-mdx-hr {
     display: none !important;
+    margin: 0 !important;
+    height: 0 !important;
   }
 
   /* Closing disclaimer — screen only */
@@ -157,7 +160,7 @@
     line-height: 1.25 !important;
     color: #0a0a0a !important;
     background: none !important;
-    min-height: 2.5em;
+    min-height: 2.15em;
     box-sizing: border-box;
     display: flex;
     align-items: flex-end;
