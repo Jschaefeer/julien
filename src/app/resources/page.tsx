@@ -14,12 +14,14 @@ export const metadata: Metadata = {
     title: "Resources",
     description:
       "NIL financial literacy guides, flyers, and content for college athletes.",
+    images: [{ url: "/opengraph-image" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Resources",
     description:
       "NIL financial literacy guides, flyers, and content for college athletes.",
+    images: ["/opengraph-image"],
   },
 };
 

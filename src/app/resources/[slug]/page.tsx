@@ -61,7 +61,8 @@ export async function generateMetadata({
       ...(image && {
         images: [
           {
-            url: `${DATA.url}${image}`,
+            url: image,
+            alt: title,
           },
         ],
       }),
@@ -71,7 +72,7 @@ export async function generateMetadata({
       title,
       description,
       ...(image && {
-        images: [`${DATA.url}${image}`],
+        images: [image],
       }),
     },
   };
