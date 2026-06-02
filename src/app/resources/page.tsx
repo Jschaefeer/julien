@@ -1,4 +1,5 @@
 import BlurFade from "@/components/magicui/blur-fade";
+import { ResourcesComingSoonRow } from "@/components/resources-coming-soon-row";
 import { allPosts } from "content-collections";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -106,6 +107,17 @@ export default async function ResourcesPage({
                   </BlurFade>
                 );
               })}
+              {pagination.page === pagination.totalPages && (
+                <BlurFade
+                  delay={BLUR_FADE_DELAY * 3 + paginatedPosts.length * 0.05}
+                >
+                  <ResourcesComingSoonRow
+                    index={
+                      (pagination.page - 1) * PAGE_SIZE + paginatedPosts.length + 1
+                    }
+                  />
+                </BlurFade>
+              )}
             </div>
           </BlurFade>
 

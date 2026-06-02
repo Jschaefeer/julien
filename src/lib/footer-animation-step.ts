@@ -1,4 +1,5 @@
 import { allPosts } from "content-collections";
+import { DATA } from "@/data/resume";
 import { paginate, normalizePage } from "@/lib/pagination";
 
 const RESOURCES_PAGE_SIZE = 5;
@@ -18,6 +19,17 @@ export function getFooterAnimationStep(
 ): number | null {
   if (pathname === "/") {
     return 7;
+  }
+
+  if (pathname === "/about") {
+    const itemCount =
+      6 +
+      3 +
+      DATA.experience.length +
+      DATA.education.length +
+      DATA.sports.length +
+      1;
+    return itemCount + 1;
   }
 
   if (pathname === "/resources") {

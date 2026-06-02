@@ -1,6 +1,4 @@
 import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
-import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
@@ -53,27 +51,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="overflow-x-hidden">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased relative",
+          "min-h-screen overflow-x-hidden bg-background font-sans antialiased relative",
           geist.variable,
           geistMono.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <TooltipProvider delayDuration={0}>
-            <div className="max-w-2xl mx-auto py-12 pb-24 sm:py-24 px-6">
-              {children}
-              <Footer />
-            </div>
-            <div
-              aria-hidden
-              className="pointer-events-none fixed inset-x-0 bottom-0 z-20 h-24 bg-gradient-to-t from-background to-transparent"
-            />
-            <Navbar />
-          </TooltipProvider>
-        </ThemeProvider>
+        <TooltipProvider delayDuration={0}>
+          <div className="mx-auto w-full max-w-3xl px-6 py-12 sm:py-24">
+            {children}
+            <Footer />
+          </div>
+        </TooltipProvider>
       </body>
     </html>
   );

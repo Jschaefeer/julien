@@ -29,10 +29,10 @@ export function BrandLogo({ logo, size = "md", className }: BrandLogoProps) {
   return (
     <span
       className={cn(
-        "brand-logo not-prose inline-flex shrink-0 align-middle",
+        "brand-logo not-prose inline-flex shrink-0 align-middle shadow-sm",
         isCard
-          ? "overflow-hidden rounded-[2px]"
-          : "items-center justify-center overflow-hidden rounded-md border border-border bg-white p-1.5 shadow-sm",
+          ? "overflow-hidden rounded-sm"
+          : "items-center justify-center overflow-hidden rounded-md border border-border bg-white p-1.5",
         sizeClass,
         logoContainerClass[logo],
         !isCard && (logoPadding[logo] ?? "p-1.5"),

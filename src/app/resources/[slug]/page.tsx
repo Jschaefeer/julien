@@ -107,7 +107,9 @@ export default async function ResourcePage({
           <h1 className="no-print title font-semibold text-3xl md:text-4xl tracking-tighter leading-tight">
             {post.title}
           </h1>
-          {isNilChecklist ? <ChecklistPrintButton /> : null}
+          {isNilChecklist ? (
+            <ChecklistPrintButton className="hidden sm:inline-flex" />
+          ) : null}
         </div>
       </BlurFade>
       {isNilChecklist ? <NilChecklistPrintSheet mdx={post.mdx} /> : null}

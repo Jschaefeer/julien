@@ -9,15 +9,7 @@ import {
 } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import {
-  ArrowUpRight,
-  ClipboardList,
-  Clock,
-  Percent,
-  ShieldAlert,
-  Wallet,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import {
@@ -28,22 +20,6 @@ import {
   blurFadeVisible,
 } from "@/lib/blur-fade";
 import { cn } from "@/lib/utils";
-
-type ArticleFooterItem = {
-  icon: LucideIcon;
-  label: string;
-};
-
-const FOOTER_BY_SLUG: Record<string, ArticleFooterItem[]> = {
-  "nil-dispatch": [
-    { icon: ClipboardList, label: "Track deals" },
-    { icon: Percent, label: "Tax set-aside" },
-  ],
-  "what-to-do-with-all-this-money": [
-    { icon: Wallet, label: "Your income" },
-    { icon: ShieldAlert, label: "Avoid scams" },
-  ],
-};
 
 export type ArticlePreviewData = {
   slug: string;
@@ -221,37 +197,9 @@ function LibraryTab({ touchStart }: { touchStart: boolean }) {
   );
 }
 
-function ArticlePreviewFooter({ article }: { article: ArticlePreviewData }) {
-  const footerItems = FOOTER_BY_SLUG[article.slug] ?? [];
-
+function ArticlePreviewFooter() {
   return (
-    <div className="flex flex-col gap-3 border-t border-border pt-4 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted-foreground">
-        {footerItems.map((item) => {
-          const Icon = item.icon;
-          return (
-            <span
-              key={item.label}
-              className="inline-flex items-center gap-1.5"
-            >
-              <Icon className="size-3.5 shrink-0" aria-hidden />
-              {item.label}
-            </span>
-          );
-        })}
-        {article.readTime ? (
-          <span className="inline-flex items-center gap-1.5">
-            <Clock className="size-3.5 shrink-0" aria-hidden />
-            {article.readTime}
-          </span>
-        ) : null}
-        {article.cost ? (
-          <span className="inline-flex items-center font-semibold text-green-700 dark:text-green-600">
-            <span aria-hidden>$</span>
-            {article.cost}
-          </span>
-        ) : null}
-      </div>
+    <div className="flex justify-end border-t border-border pt-4">
       <span className="inline-flex shrink-0 items-center text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
         <span className="relative inline-flex items-center transition-transform duration-200 ease-out group-hover:-translate-x-1.5">
           Read article
@@ -289,7 +237,7 @@ function ArticlePreviewCard({ article }: { article: ArticlePreviewData }) {
         {article.excerpt}
       </p>
 
-      <ArticlePreviewFooter article={article} />
+      <ArticlePreviewFooter />
     </Link>
   );
 }

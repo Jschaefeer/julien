@@ -27,7 +27,7 @@ export const DATA = {
       detail: "Lifelong fan",
       logo: "/logos/knicks.svg",
       logoFill: "#006BB6",
-      logoImageClassName: "object-contain scale-105",
+      logoImageClassName: "object-contain scale-90 p-1",
     },
     {
       name: "New York Yankees",
@@ -65,11 +65,11 @@ export const DATA = {
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
     { href: "/resources", icon: NotebookIcon, label: "Resources" },
-    { href: "#", icon: UserIcon, label: "Contact" },
+    { href: "/about", icon: UserIcon, label: "About" },
   ],
   featuredContent: {
     title: "The NIL Dispatch",
-    label: "NIL Guide",
+    label: "Checklist",
     slug: "nil-dispatch",
     description:
       "A step-by-step checklist to track every deal, keep NIL income in a separate account, and set aside 20–30% for taxes before you spend. Covers FDIC insurance, quarterly tax payments, credit basics, and how to vet the CPA, lawyer, and advisor on your team.",

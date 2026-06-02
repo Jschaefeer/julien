@@ -9,15 +9,23 @@ import {
   SectionHeading,
 } from "@/components/section/section-block";
 import {
+  ArrowUpRight,
   Briefcase,
   Calendar,
   GraduationCap,
+  Instagram,
+  MailIcon,
   Trophy,
   type LucideIcon,
 } from "lucide-react";
+import Link from "next/link";
+
+import { Icons } from "@/components/icons";
 
 import { ExpandableDescription } from "@/components/expandable-description";
+import ExpandableAvatar from "@/components/expandable-avatar";
 import BlurFade from "@/components/magicui/blur-fade";
+import { Badge } from "@/components/ui/badge";
 import { DATA } from "@/data/resume";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
 import { cn } from "@/lib/utils";
@@ -59,7 +67,7 @@ function EntryLogo({
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 items-center justify-center overflow-hidden rounded-md border",
+        "inline-flex shrink-0 items-center justify-center overflow-hidden rounded-xl border",
         wide ? "h-10 w-[5.5rem]" : "size-10",
         fill
           ? "p-0 shadow-none"
@@ -215,6 +223,126 @@ function SportsEntry({
   );
 }
 
+const CONTACT_LINKS = [
+  {
+    href: DATA.contact.instagram,
+    icon: Instagram,
+    label: "Instagram",
+    external: true,
+  },
+  {
+    href: DATA.contact.linkedin,
+    icon: Icons.linkedin,
+    label: "LinkedIn",
+    external: true,
+  },
+  {
+    href: `mailto:${DATA.contact.email}`,
+    icon: MailIcon,
+    label: "Email",
+    external: false,
+  },
+] as const;
+
+function ContactLinks({
+  baseDelay,
+  compact = false,
+}: {
+  baseDelay: number;
+  compact?: boolean;
+}) {
+  if (compact) {
+    return (
+      <div className="flex flex-wrap gap-2">
+        {CONTACT_LINKS.map((link, index) => (
+          <BlurFade
+            key={link.label}
+            delay={baseDelay + index * BLUR_FADE_DELAY}
+          >
+            <a
+              href={link.href}
+              target={link.external ? "_blank" : undefined}
+              rel={link.external ? "noopener noreferrer" : undefined}
+              className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium transition-colors can-hover:hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <link.icon className="size-4 shrink-0 text-muted-foreground" />
+              {link.label}
+            </a>
+          </BlurFade>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-y-4">
+      {CONTACT_LINKS.map((link, index) => (
+        <BlurFade
+          key={link.label}
+          delay={baseDelay + (index + 1) * BLUR_FADE_DELAY}
+        >
+          <a
+            href={link.href}
+            target={link.external ? "_blank" : undefined}
+            rel={link.external ? "noopener noreferrer" : undefined}
+            className="group flex items-center gap-3 rounded-xl border border-border p-4 transition-colors can-hover:hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            <link.icon className="size-4 shrink-0 text-muted-foreground" />
+            <span className="font-medium">{link.label}</span>
+          </a>
+        </BlurFade>
+      ))}
+    </div>
+  );
+}
+
+export function AboutPageHero({ baseDelay }: { baseDelay: number }) {
+  const bioDelay = baseDelay + BLUR_FADE_DELAY * 2;
+  const contactDelay = baseDelay + BLUR_FADE_DELAY * 3;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6 md:gap-8">
+        <BlurFade delay={baseDelay} className="shrink-0 self-start sm:order-2">
+          <ExpandableAvatar
+            alt={DATA.name}
+            srcs={DATA.avatarUrls}
+            initials={DATA.initials}
+            className="size-28 sm:size-40 md:size-44"
+          />
+        </BlurFade>
+        <div className="flex min-w-0 flex-1 flex-col gap-3 sm:order-1">
+          <BlurFade delay={baseDelay}>
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-muted-foreground">About</p>
+              <h1 className="text-3xl font-semibold tracking-tighter sm:text-4xl">
+                {DATA.name}
+              </h1>
+            </div>
+          </BlurFade>
+          <BlurFade delay={baseDelay + BLUR_FADE_DELAY}>
+            <div className="flex flex-wrap gap-2">
+              {DATA.tags.map((tag) => (
+                <Badge key={tag} variant="outline">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </BlurFade>
+          <BlurFade delay={bioDelay}>
+            <div className="prose prose-sm max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
+              <Markdown>{DATA.summary}</Markdown>
+            </div>
+          </BlurFade>
+        </div>
+      </div>
+      <div id="contact">
+        <ContactLinks baseDelay={contactDelay} compact />
+      </div>
+    </div>
+  );
+}
+
 export function AboutIntroSection() {
   return (
     <SectionBlock id="about" className="-mt-section-hero-pull">
@@ -230,12 +358,35 @@ export function AboutIntroSection() {
   );
 }
 
-export function ExperienceEducationSection() {
-  const experienceStartDelay = BLUR_FADE_DELAY * 7;
+export function AboutContactSection({
+  baseDelay,
+}: {
+  baseDelay: number;
+}) {
+  return (
+    <SectionBlock>
+      <BlurFade delay={baseDelay}>
+        <SectionHeading>Contact</SectionHeading>
+      </BlurFade>
+      <SectionContent>
+        <ContactLinks baseDelay={baseDelay} />
+      </SectionContent>
+    </SectionBlock>
+  );
+}
+
+export function ExperienceEducationSection({
+  baseDelay = BLUR_FADE_DELAY,
+}: {
+  baseDelay?: number;
+}) {
+  const experienceStartDelay = baseDelay;
   const educationStartDelay =
     experienceStartDelay + DATA.experience.length * BLUR_FADE_DELAY + BLUR_FADE_DELAY;
   const sportsStartDelay =
     educationStartDelay + DATA.education.length * BLUR_FADE_DELAY + BLUR_FADE_DELAY;
+  const ctaDelay =
+    sportsStartDelay + DATA.sports.length * BLUR_FADE_DELAY + BLUR_FADE_DELAY;
 
   return (
     <section id="experience">
@@ -290,6 +441,20 @@ export function ExperienceEducationSection() {
             </div>
           </SectionContent>
         </SectionBlock>
+
+        <BlurFade delay={ctaDelay}>
+          <div className="flex justify-center pt-2">
+            <Link
+              href={`/resources/${DATA.featuredContent.slug}`}
+              className="group inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium transition-colors can-hover:hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <span className="relative inline-flex items-center transition-transform duration-200 ease-out group-hover:-translate-x-1.5">
+                Read {DATA.featuredContent.title}
+                <ArrowUpRight className="absolute left-[calc(100%+2px)] top-1/2 size-4 -translate-x-2 -translate-y-1/2 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100" />
+              </span>
+            </Link>
+          </div>
+        </BlurFade>
       </SectionGroup>
     </section>
   );

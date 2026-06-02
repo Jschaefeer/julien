@@ -1,19 +1,24 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Printer } from "lucide-react";
 
-export function ChecklistPrintButton() {
+type ChecklistPrintButtonProps = {
+  className?: string;
+};
+
+export function ChecklistPrintButton({ className }: ChecklistPrintButtonProps) {
   return (
-    <Button
+    <button
       type="button"
-      variant="outline"
-      size="sm"
-      className="no-print gap-2 shrink-0"
+      className={cn(
+        "no-print inline-flex shrink-0 items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium transition-colors can-hover:hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        className
+      )}
       onClick={() => window.print()}
     >
-      <Printer className="size-3.5" aria-hidden />
+      <Printer className="size-4" aria-hidden />
       Print checklist
-    </Button>
+    </button>
   );
 }

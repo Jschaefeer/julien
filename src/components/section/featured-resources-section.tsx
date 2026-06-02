@@ -5,17 +5,20 @@ import {
   SectionContent,
   SectionHeading,
 } from "@/components/section/section-block";
+import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
 
-const BLUR_FADE_DELAY = 0.04;
-
-export default function FeaturedResourcesSection() {
+export default function FeaturedResourcesSection({
+  baseDelay = BLUR_FADE_DELAY * 5,
+}: {
+  baseDelay?: number;
+}) {
   return (
     <SectionBlock id="resources">
-      <BlurFade delay={BLUR_FADE_DELAY * 5}>
+      <BlurFade delay={baseDelay}>
         <SectionHeading>Featured Resources</SectionHeading>
       </BlurFade>
 
-      <BlurFade delay={BLUR_FADE_DELAY * 6}>
+      <BlurFade delay={baseDelay + BLUR_FADE_DELAY}>
         <SectionContent>
           <FileCabinet />
         </SectionContent>

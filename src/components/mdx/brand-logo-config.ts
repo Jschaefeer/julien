@@ -14,9 +14,9 @@ export const logoContainerClass: Record<string, string> = {
   amexgold: "",
   "bankofamerica-card": "",
   "chase-card": "",
-  coinbase: "border-[#0052FF] bg-[#0052FF] p-0 shadow-none rounded-sm",
-  marcus: "border-[#7399C6] bg-[#7399C6] p-0 shadow-none rounded-sm",
-  robinhood: "border-[#00C805] bg-[#00C805] shadow-none rounded-sm",
+  coinbase: "border-[#0052FF] bg-[#0052FF] p-0",
+  marcus: "border-[#7399C6] bg-[#7399C6] p-0",
+  robinhood: "border-[#00C805] bg-[#00C805]",
 };
 
 export const logoSrc: Record<string, string> = {

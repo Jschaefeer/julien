@@ -4,9 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Clock, GraduationCap, Landmark } from "lucide-react";
 
-import { useTheme } from "next-themes";
-
 import { SpaceParticles } from "@/components/magicui/space-particles";
+import { usePrefersDark } from "@/lib/use-prefers-dark";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +31,7 @@ export function FeaturedHeroCard({
   cost,
 }: FeaturedHeroCardProps) {
   const [hovered, setHovered] = useState(false);
-  const { resolvedTheme } = useTheme();
+  const prefersDark = usePrefersDark();
 
   return (
     <Link
@@ -46,7 +45,7 @@ export function FeaturedHeroCard({
       <div className="relative border-b border-red-900/30 bg-[linear-gradient(to_bottom_right,#991b1b,#7f1d1d,#450a0a)] px-5 py-4 text-white dark:border-red-900/40 dark:bg-linear-to-br dark:from-red-950/55 dark:via-rose-950/25 dark:to-background dark:text-inherit">
         <SpaceParticles
           active={hovered}
-          particleColor={resolvedTheme === "dark" ? "244, 63, 94" : "255, 255, 255"}
+          particleColor={prefersDark ? "244, 63, 94" : "255, 255, 255"}
         />
         <div
           className={cn(

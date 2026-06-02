@@ -1,3 +1,4 @@
+import { ArticleByline } from "@/components/mdx/article-byline";
 import { CodeBlock } from "@/components/mdx/code-block";
 import { BrandHeading } from "@/components/mdx/brand-heading";
 import { BrandLogo } from "@/components/mdx/brand-logo";
@@ -10,6 +11,7 @@ type CodeProps = ComponentProps<"code"> & {
 };
 
 export const mdxComponents = {
+  ArticleByline,
   BrandHeading,
   BrandLogo,
   MediaContainer,

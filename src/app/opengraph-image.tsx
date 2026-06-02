@@ -1,39 +1,25 @@
 import { ImageResponse } from "next/og";
+
+import { getBrandTheme, resolveColorScheme } from "@/lib/brand-theme";
+import { getGeistFontData } from "@/lib/og-fonts";
+import { SITE } from "@/lib/seo";
 import { DATA } from "@/data/resume";
 
-export const runtime = "edge";
-
-export const alt = DATA.name;
+export const alt = SITE.title;
 export const size = {
   width: 1200,
   height: 630,
 };
 export const contentType = "image/png";
 
-const RED_950 = "#450a0a";
-const ROSE_950 = "#4c0519";
-const CARD_GRADIENT = `linear-gradient(135deg, ${RED_950} 0%, #5c1020 45%, ${ROSE_950} 100%)`;
-
-const getFontData = async () => {
-  try {
-    const [cabinetGrotesk, clashDisplay] = await Promise.all([
-      fetch(
-        new URL("../../public/fonts/CabinetGrotesk-Medium.ttf", import.meta.url)
-      ).then((res) => res.arrayBuffer()),
-      fetch(
-        new URL("../../public/fonts/ClashDisplay-Semibold.ttf", import.meta.url)
-      ).then((res) => res.arrayBuffer()),
-    ]);
-    return { cabinetGrotesk, clashDisplay };
-  } catch (error) {
-    console.error("Failed to load fonts:", error);
-    return null;
-  }
-};
-
 export default async function Image() {
   try {
-    const fontData = await getFontData();
+    const [fontData, colorScheme] = await Promise.all([
+      getGeistFontData(),
+      resolveColorScheme(),
+    ]);
+    const theme = getBrandTheme(colorScheme);
+    const fontFamily = fontData ? "Geist" : "sans-serif";
 
     return new ImageResponse(
       (
@@ -44,37 +30,58 @@ export default async function Image() {
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
-            justifyContent: "flex-end",
-            background: CARD_GRADIENT,
-            padding: "64px 72px",
+            justifyContent: "center",
+            backgroundColor: theme.background,
+            padding: "72px 80px",
           }}
         >
           <div
             style={{
-              fontFamily: "Clash Display",
-              fontSize: 72,
-              fontWeight: 600,
-              lineHeight: 1.1,
-              color: "#ffffff",
-              letterSpacing: "-0.02em",
-              marginBottom: 20,
-              textAlign: "left",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
             }}
           >
-            {DATA.name}
-          </div>
-          <div
-            style={{
-              fontFamily: "Cabinet Grotesk",
-              fontSize: 34,
-              fontWeight: 400,
-              lineHeight: 1.45,
-              color: "rgba(255, 255, 255, 0.78)",
-              maxWidth: 920,
-              textAlign: "left",
-            }}
-          >
-            {DATA.description}
+            <div
+              style={{
+                display: "flex",
+                fontFamily,
+                fontSize: 64,
+                fontWeight: 600,
+                lineHeight: 1.1,
+                color: theme.foreground,
+                letterSpacing: "-0.04em",
+                marginBottom: 16,
+              }}
+            >
+              {SITE.title}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontFamily,
+                fontSize: 32,
+                fontWeight: 400,
+                lineHeight: 1.35,
+                color: theme.mutedForeground,
+                marginBottom: 28,
+              }}
+            >
+              {`by ${DATA.name}`}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontFamily,
+                fontSize: 26,
+                fontWeight: 400,
+                lineHeight: 1.55,
+                color: theme.mutedForeground,
+                maxWidth: 920,
+              }}
+            >
+              {DATA.description}
+            </div>
           </div>
         </div>
       ),
@@ -83,26 +90,26 @@ export default async function Image() {
         fonts: fontData
           ? [
               {
-                name: "Cabinet Grotesk",
-                data: fontData.cabinetGrotesk,
+                name: "Geist",
+                data: fontData.regular,
                 weight: 400,
                 style: "normal",
               },
               {
-                name: "Clash Display",
-                data: fontData.clashDisplay,
+                name: "Geist",
+                data: fontData.semibold,
                 weight: 600,
                 style: "normal",
               },
             ]
           : undefined,
-      }
+      },
     );
   } catch (error) {
     console.error("Error generating OpenGraph image:", error);
     return new Response(
       `Failed to generate image: ${error instanceof Error ? error.message : "Unknown error"}`,
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

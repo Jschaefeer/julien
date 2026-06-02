@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal, flushSync } from "react-dom";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
@@ -45,13 +45,16 @@ function getTriggerRect(element: HTMLElement): Rect {
   };
 }
 
+/** Same corner radius as thumbnail `rounded-xl` (--radius-xl). */
+const avatarBorderRadius = "var(--radius-xl)";
+
 const containerVariants = {
   collapsed: ({ origin }: LightboxRects) => ({
     top: origin.top,
     left: origin.left,
     width: origin.width,
     height: origin.height,
-    borderRadius: 12,
+    borderRadius: avatarBorderRadius,
     transition: {
       type: "tween" as const,
       duration: 0.26,
@@ -63,7 +66,7 @@ const containerVariants = {
     left: expanded.left,
     width: expanded.width,
     height: expanded.height,
-    borderRadius: 16,
+    borderRadius: avatarBorderRadius,
     transition: {
       type: "spring" as const,
       stiffness: 420,
@@ -73,7 +76,30 @@ const containerVariants = {
 };
 
 const CONTROLS_SHOW_DELAY_MS = 90;
+const CONTROLS_HIDE_MS = 80;
+const AUTO_ROTATE_MS = 4500;
 const controlsEnterTransition = { duration: 0.14, delay: 0.06 };
+const controlsExitTransition = { duration: 0.08 };
+
+const thumbnailVariants = {
+  enter: {
+    opacity: 0,
+    scale: 1.04,
+  },
+  center: {
+    opacity: 1,
+    scale: 1,
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.96,
+  },
+};
+
+const thumbnailTransition = {
+  duration: 0.55,
+  ease: [0.33, 1, 0.68, 1] as const,
+};
 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -111,17 +137,48 @@ export default function ExpandableAvatar({
 }: ExpandableAvatarProps) {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const rectsRef = useRef<LightboxRects | null>(null);
+  const instantHandoffRef = useRef(false);
+  const closeTimerRef = useRef<number | null>(null);
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [open, setOpen] = useState(false);
   const [showControls, setShowControls] = useState(false);
   const [showThumbnail, setShowThumbnail] = useState(true);
+  const [isClosing, setIsClosing] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [autoRotatePaused, setAutoRotatePaused] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   const hasMultiple = srcs.length > 1;
   const currentSrc = srcs[index];
 
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (
+      !hasMultiple ||
+      open ||
+      !showThumbnail ||
+      autoRotatePaused ||
+      prefersReducedMotion
+    ) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setDirection(1);
+      setIndex((current) => (current + 1) % srcs.length);
+    }, AUTO_ROTATE_MS);
+
+    return () => clearInterval(interval);
+  }, [
+    hasMultiple,
+    open,
+    showThumbnail,
+    autoRotatePaused,
+    prefersReducedMotion,
+    srcs.length,
+  ]);
 
   const goTo = useCallback(
     (nextIndex: number) => {
@@ -162,15 +219,32 @@ export default function ExpandableAvatar({
 
   const openLightbox = useCallback(() => {
     if (!captureRects()) return;
-    setShowControls(false);
-    setShowThumbnail(false);
-    setOpen(true);
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    instantHandoffRef.current = true;
+    flushSync(() => {
+      setShowControls(false);
+      setIsClosing(false);
+      setShowThumbnail(false);
+      setOpen(true);
+    });
   }, [captureRects]);
 
   const closeLightbox = useCallback(() => {
-    flushSync(() => setShowControls(false));
-    captureRects();
-    setOpen(false);
+    if (!captureRects()) return;
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current);
+    }
+    flushSync(() => {
+      setShowControls(false);
+      setIsClosing(true);
+    });
+    closeTimerRef.current = window.setTimeout(() => {
+      closeTimerRef.current = null;
+      setOpen(false);
+    }, CONTROLS_HIDE_MS);
   }, [captureRects]);
 
   useEffect(() => {
@@ -180,6 +254,8 @@ export default function ExpandableAvatar({
   }, [open]);
 
   const handleExitComplete = useCallback(() => {
+    setIsClosing(false);
+    instantHandoffRef.current = true;
     setShowThumbnail(true);
   }, []);
 
@@ -230,7 +306,7 @@ export default function ExpandableAvatar({
                   animate={{ opacity: 1, transition: { duration: 0.15 } }}
                   exit={{
                     opacity: 0,
-                    transition: { duration: 0.22, delay: 0.06 },
+                    transition: { duration: 0.2 },
                   }}
                   onClick={closeLightbox}
                 />
@@ -241,7 +317,12 @@ export default function ExpandableAvatar({
                   initial="collapsed"
                   animate="expanded"
                   exit="collapsed"
-                  className="fixed z-50 overflow-hidden border bg-background shadow-2xl ring-4 ring-muted will-change-[top,left,width,height]"
+                  onAnimationComplete={() => {
+                    if (open && !isClosing) {
+                      instantHandoffRef.current = false;
+                    }
+                  }}
+                  className="fixed z-50 overflow-hidden rounded-xl bg-background shadow-2xl will-change-[top,left,width,height]"
                   onClick={(event) => event.stopPropagation()}
                 >
                   <div className="relative h-full w-full">
@@ -252,9 +333,9 @@ export default function ExpandableAvatar({
                         alt={alt}
                         custom={direction}
                         variants={slideVariants}
-                        initial="enter"
+                        initial={instantHandoffRef.current ? false : "enter"}
                         animate="center"
-                        exit="exit"
+                        exit={isClosing ? { x: 0, opacity: 1 } : "exit"}
                         transition={{ duration: 0.22, ease: [0.33, 1, 0.68, 1] as const }}
                         drag={hasMultiple ? "x" : false}
                         dragConstraints={{ left: 0, right: 0 }}
@@ -270,69 +351,70 @@ export default function ExpandableAvatar({
                   </div>
                 </motion.div>
 
-                {hasMultiple && showControls && (
-                  <>
-                    <motion.button
-                      type="button"
-                      aria-label="Previous photo"
-                      onClick={goPrev}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={controlsEnterTransition}
-                      className="fixed z-[60] -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow-sm transition-colors hover:bg-muted"
-                      style={{
-                        top: rects.expanded.top + rects.expanded.height / 2,
-                        left: rects.expanded.left + 12,
-                      }}
-                    >
-                      <ChevronLeft className="size-5" />
-                    </motion.button>
-                    <motion.button
-                      type="button"
-                      aria-label="Next photo"
-                      onClick={goNext}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={controlsEnterTransition}
-                      className="fixed z-[60] -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow-sm transition-colors hover:bg-muted"
-                      style={{
-                        top: rects.expanded.top + rects.expanded.height / 2,
-                        left: rects.expanded.left + rects.expanded.width - 44,
-                      }}
-                    >
-                      <ChevronRight className="size-5" />
-                    </motion.button>
-                  </>
-                )}
-
-                {hasMultiple && showControls && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={controlsEnterTransition}
-                    className="fixed z-[60] flex items-center justify-center gap-2"
-                    style={{
-                      top: rects.expanded.top + rects.expanded.height + 16,
-                      left: rects.expanded.left,
-                      width: rects.expanded.width,
-                    }}
-                  >
-                    {srcs.map((src, i) => (
-                      <button
-                        key={src}
-                        type="button"
-                        aria-label={`Go to photo ${i + 1}`}
-                        aria-current={i === index ? "true" : undefined}
-                        onClick={() => goTo(i)}
-                        className={cn(
-                          "rounded-full transition-all duration-200",
-                          i === index
-                            ? "size-2 bg-foreground"
-                            : "size-2 bg-foreground/30 hover:bg-foreground/50"
-                        )}
-                      />
-                    ))}
-                  </motion.div>
+                {hasMultiple && (
+                  <AnimatePresence>
+                    {showControls && !isClosing && (
+                      <>
+                        <motion.button
+                          type="button"
+                          aria-label="Previous photo"
+                          onClick={goPrev}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1, transition: controlsEnterTransition }}
+                          exit={{ opacity: 0, transition: controlsExitTransition }}
+                          className="fixed z-[60] -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow-sm transition-colors hover:bg-muted"
+                          style={{
+                            top: rects.expanded.top + rects.expanded.height / 2,
+                            left: rects.expanded.left + 12,
+                          }}
+                        >
+                          <ChevronLeft className="size-5" />
+                        </motion.button>
+                        <motion.button
+                          type="button"
+                          aria-label="Next photo"
+                          onClick={goNext}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1, transition: controlsEnterTransition }}
+                          exit={{ opacity: 0, transition: controlsExitTransition }}
+                          className="fixed z-[60] -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow-sm transition-colors hover:bg-muted"
+                          style={{
+                            top: rects.expanded.top + rects.expanded.height / 2,
+                            left: rects.expanded.left + rects.expanded.width - 44,
+                          }}
+                        >
+                          <ChevronRight className="size-5" />
+                        </motion.button>
+                        <motion.div
+                          initial={{ opacity: 0, y: 4 }}
+                          animate={{ opacity: 1, y: 0, transition: controlsEnterTransition }}
+                          exit={{ opacity: 0, y: 4, transition: controlsExitTransition }}
+                          className="fixed z-[60] flex items-center justify-center gap-2"
+                          style={{
+                            top: rects.expanded.top + rects.expanded.height + 16,
+                            left: rects.expanded.left,
+                            width: rects.expanded.width,
+                          }}
+                        >
+                          {srcs.map((src, i) => (
+                            <button
+                              key={src}
+                              type="button"
+                              aria-label={`Go to photo ${i + 1}`}
+                              aria-current={i === index ? "true" : undefined}
+                              onClick={() => goTo(i)}
+                              className={cn(
+                                "rounded-full transition-all duration-200",
+                                i === index
+                                  ? "size-2 bg-foreground"
+                                  : "size-2 bg-foreground/30 hover:bg-foreground/50"
+                              )}
+                            />
+                          ))}
+                        </motion.div>
+                      </>
+                    )}
+                  </AnimatePresence>
                 )}
 
                 <motion.button
@@ -367,6 +449,10 @@ export default function ExpandableAvatar({
         ref={triggerRef}
         type="button"
         onClick={openLightbox}
+        onMouseEnter={() => setAutoRotatePaused(true)}
+        onMouseLeave={() => setAutoRotatePaused(false)}
+        onFocus={() => setAutoRotatePaused(true)}
+        onBlur={() => setAutoRotatePaused(false)}
         aria-label={`View photo of ${alt}`}
         aria-expanded={open}
         className={cn(
@@ -374,29 +460,35 @@ export default function ExpandableAvatar({
           className
         )}
       >
-        {hasMultiple && (
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute -inset-1 rounded-[14px] p-[3px]"
-            animate={{ rotate: index * (360 / srcs.length) }}
-            transition={{ duration: 0.22, ease: [0.33, 1, 0.68, 1] as const }}
-            style={{
-              background: `conic-gradient(hsl(var(--foreground)) 0deg ${360 / srcs.length}deg, hsl(var(--muted-foreground) / 0.35) ${360 / srcs.length}deg 360deg)`,
-            }}
-          >
-            <div className="size-full rounded-[11px] bg-background" />
-          </motion.div>
-        )}
-
-        <div className="relative size-full overflow-hidden rounded-xl border shadow-lg ring-4 ring-muted">
-          <img
-            src={currentSrc}
-            alt={alt}
-            className={cn(
-              "size-full object-cover",
-              !showThumbnail && "opacity-0"
-            )}
-          />
+        <div className="relative size-full overflow-hidden rounded-xl shadow-lg">
+          <AnimatePresence mode="popLayout" initial={false}>
+            {showThumbnail ? (
+              <motion.img
+                key={currentSrc}
+                src={currentSrc}
+                alt={alt}
+                variants={thumbnailVariants}
+                initial={instantHandoffRef.current ? false : "enter"}
+                animate="center"
+                exit={
+                  instantHandoffRef.current
+                    ? { opacity: 0, scale: 1, transition: { duration: 0 } }
+                    : "exit"
+                }
+                transition={
+                  instantHandoffRef.current
+                    ? { duration: 0 }
+                    : thumbnailTransition
+                }
+                onAnimationComplete={() => {
+                  if (showThumbnail) {
+                    instantHandoffRef.current = false;
+                  }
+                }}
+                className="absolute inset-0 size-full object-cover"
+              />
+            ) : null}
+          </AnimatePresence>
         </div>
 
         <span className="sr-only">{initials}</span>
