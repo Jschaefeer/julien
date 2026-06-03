@@ -20,6 +20,7 @@ import { ChevronRight, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
+import { accentChevron } from "@/lib/accent-classes";
 import { cn } from "@/lib/utils";
 
 export type ContactOriginRect = {
@@ -138,7 +139,7 @@ function ContactPanelContent({
 
   return (
     <div className="flex h-full min-h-0 w-full flex-col">
-      <div className="flex h-[58px] shrink-0 items-center justify-between px-5 py-4">
+      <div className="group flex h-[58px] shrink-0 items-center justify-between px-5 py-4">
         <span className="text-base font-medium">Contact</span>
         {open ? (
           <motion.button
@@ -149,7 +150,7 @@ function ContactPanelContent({
             transition={contentVisibilityTransition(reducedMotion, closing)}
             className={cn(
               "inline-flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors",
-              "can-hover:hover:bg-muted/50 can-hover:hover:text-foreground",
+              "can-hover:hover:bg-muted/50 can-hover:hover:text-money-green",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
             )}
             aria-label="Close"
@@ -157,10 +158,7 @@ function ContactPanelContent({
             <X className="size-4" aria-hidden />
           </motion.button>
         ) : (
-          <ChevronRight
-            className="size-4 shrink-0 text-muted-foreground"
-            aria-hidden
-          />
+          <ChevronRight className={accentChevron} aria-hidden />
         )}
       </div>
 

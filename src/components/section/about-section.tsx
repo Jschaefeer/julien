@@ -28,6 +28,7 @@ import BlurFade from "@/components/magicui/blur-fade";
 import { Badge } from "@/components/ui/badge";
 import { DATA } from "@/data/resume";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
+import { accentIcon } from "@/lib/accent-classes";
 import { cn } from "@/lib/utils";
 
 function MetaItem({
@@ -263,9 +264,9 @@ function ContactLinks({
               href={link.href}
               target={link.external ? "_blank" : undefined}
               rel={link.external ? "noopener noreferrer" : undefined}
-              className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium transition-colors can-hover:hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="group inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium transition-colors can-hover:hover:bg-muted/50 can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              <link.icon className="size-4 shrink-0 text-muted-foreground" />
+              <link.icon className={cn("size-4", accentIcon)} />
               {link.label}
             </a>
           </BlurFade>
@@ -285,9 +286,9 @@ function ContactLinks({
             href={link.href}
             target={link.external ? "_blank" : undefined}
             rel={link.external ? "noopener noreferrer" : undefined}
-            className="group flex items-center gap-3 rounded-xl border border-border p-4 transition-colors can-hover:hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="group flex items-center gap-3 rounded-xl border border-border p-4 transition-colors can-hover:hover:bg-muted/50 can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
-            <link.icon className="size-4 shrink-0 text-muted-foreground" />
+            <link.icon className={cn("size-4", accentIcon)} />
             <span className="font-medium">{link.label}</span>
           </a>
         </BlurFade>

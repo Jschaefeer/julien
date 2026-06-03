@@ -8,6 +8,7 @@ import BlurFade from "@/components/magicui/blur-fade";
 import type { ContactOriginRect } from "@/components/home-contact-overlay";
 import { useContactTrigger } from "@/components/home-contact-overlay";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
+import { accentChevron } from "@/lib/accent-classes";
 import { cn } from "@/lib/utils";
 
 const HOME_LINKS = [
@@ -50,10 +51,7 @@ export function HomeNavLinks({
           {HOME_LINKS.map((link) => (
             <Link key={link.href} href={link.href} className={navLinkClass} tabIndex={contactLocked ? -1 : 0}>
               {link.label}
-              <ChevronRight
-                className="size-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5"
-                aria-hidden
-              />
+              <ChevronRight className={accentChevron} aria-hidden />
             </Link>
           ))}
         </div>
@@ -75,10 +73,7 @@ export function HomeNavLinks({
           tabIndex={contactLocked ? -1 : 0}
         >
           Contact
-          <ChevronRight
-            className="size-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5"
-            aria-hidden
-          />
+          <ChevronRight className={accentChevron} aria-hidden />
         </button>
       </BlurFade>
     </nav>

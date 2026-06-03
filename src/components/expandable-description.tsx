@@ -5,6 +5,7 @@ import { ChevronDown } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { BLUR_FADE_EASE } from "@/lib/blur-fade";
+import { accentChevronSm, accentToggle } from "@/lib/accent-classes";
 import { cn } from "@/lib/utils";
 
 /** Same easing as file-cabinet-drawer AnimatedTabPanel */
@@ -253,13 +254,14 @@ export function ExpandableDescription({
             <button
               type="button"
               onClick={() => setExpanded((open) => !open)}
-              className="group mt-0.5 inline-flex w-fit items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className={cn("mt-0.5", accentToggle)}
               aria-expanded={expanded}
             >
               {expanded ? "See less" : "See more"}
               <ChevronDown
                 className={cn(
-                  "size-3.5 shrink-0 transition-transform duration-[260ms] ease-[cubic-bezier(0.32,0.72,0,1)]",
+                  accentChevronSm,
+                  "size-3.5 transition-transform duration-[260ms] ease-[cubic-bezier(0.32,0.72,0,1)] can-hover:group-hover:translate-x-0",
                   expanded && "rotate-180"
                 )}
                 aria-hidden

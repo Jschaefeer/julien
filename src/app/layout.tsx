@@ -60,7 +60,7 @@ export default function RootLayout({
         )}
       >
         <TooltipProvider delayDuration={0}>
-          <div className="mx-auto w-full max-w-3xl px-6 py-12 sm:py-24">
+          <div className="site-shell relative z-0 mx-auto w-full max-w-3xl px-6 py-12 sm:py-24">
             {children}
             <Footer />
           </div>

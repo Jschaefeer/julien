@@ -7,6 +7,7 @@ import { ArrowUpRight, Clock, GraduationCap, Landmark } from "lucide-react";
 import { SpaceParticles } from "@/components/magicui/space-particles";
 import { usePrefersDark } from "@/lib/use-prefers-dark";
 import { Badge } from "@/components/ui/badge";
+import { accentArrowReveal, accentCta, accentCtaInner } from "@/lib/accent-classes";
 import { cn } from "@/lib/utils";
 
 interface FeaturedHeroCardProps {
@@ -87,10 +88,10 @@ export function FeaturedHeroCard({
           </span>
           <span className="font-medium text-green-800 dark:text-green-700">${cost}</span>
         </div>
-        <span className="inline-flex items-center text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
-          <span className="relative inline-flex items-center transition-transform duration-200 ease-out group-hover:-translate-x-1.5">
+        <span className={cn("inline-flex items-center", accentCta)}>
+          <span className={accentCtaInner}>
             Start Reading
-            <ArrowUpRight className="absolute left-[calc(100%+2px)] top-1/2 size-3.5 -translate-x-2 -translate-y-1/2 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100" />
+            <ArrowUpRight className={accentArrowReveal} aria-hidden />
           </span>
         </span>
       </div>

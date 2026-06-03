@@ -57,7 +57,7 @@ function DockIconLink({
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
       >
-        <DockIcon className="rounded-3xl cursor-pointer size-full bg-background p-0 text-muted-foreground can-hover:hover:text-foreground can-hover:hover:bg-muted backdrop-blur-3xl border border-border can-hover:transition-colors">
+        <DockIcon className="rounded-3xl cursor-pointer size-full bg-background p-0 text-muted-foreground can-hover:hover:text-money-green can-hover:hover:bg-muted backdrop-blur-3xl border border-border can-hover:transition-colors">
           {children}
         </DockIcon>
       </a>
@@ -69,7 +69,7 @@ export default function Navbar() {
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-4 z-30">
       <LayoutGroup id="navbar-dock">
-        <Dock className="z-50 pointer-events-auto relative h-14 items-end p-2 w-fit mx-auto flex overflow-visible border bg-card/90 backdrop-blur-3xl shadow-[0_0_10px_3px] shadow-primary/5">
+        <Dock className="z-50 pointer-events-auto relative h-14 items-end p-2 w-fit mx-auto flex overflow-visible border bg-card/90 backdrop-blur-3xl shadow-[0_0_14px_4px] shadow-[color-mix(in_oklch,var(--money-green)_12%,transparent)]">
           <motion.div
             layout
             transition={{ layout: LAYOUT_SPRING }}

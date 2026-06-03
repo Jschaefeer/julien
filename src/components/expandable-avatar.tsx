@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal, flushSync } from "react-dom";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { accentChevronMd } from "@/lib/accent-classes";
 import { cn } from "@/lib/utils";
 
 type Rect = {
@@ -362,13 +363,13 @@ export default function ExpandableAvatar({
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1, transition: controlsEnterTransition }}
                           exit={{ opacity: 0, transition: controlsExitTransition }}
-                          className="fixed z-[60] -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow-sm transition-colors hover:bg-muted"
+                          className="group fixed z-[60] -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow-sm transition-colors can-hover:hover:bg-muted"
                           style={{
                             top: rects.expanded.top + rects.expanded.height / 2,
                             left: rects.expanded.left + 12,
                           }}
                         >
-                          <ChevronLeft className="size-5" />
+                          <ChevronLeft className={accentChevronMd} />
                         </motion.button>
                         <motion.button
                           type="button"
@@ -377,13 +378,13 @@ export default function ExpandableAvatar({
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1, transition: controlsEnterTransition }}
                           exit={{ opacity: 0, transition: controlsExitTransition }}
-                          className="fixed z-[60] -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow-sm transition-colors hover:bg-muted"
+                          className="group fixed z-[60] -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow-sm transition-colors can-hover:hover:bg-muted"
                           style={{
                             top: rects.expanded.top + rects.expanded.height / 2,
                             left: rects.expanded.left + rects.expanded.width - 44,
                           }}
                         >
-                          <ChevronRight className="size-5" />
+                          <ChevronRight className={accentChevronMd} />
                         </motion.button>
                         <motion.div
                           initial={{ opacity: 0, y: 4 }}

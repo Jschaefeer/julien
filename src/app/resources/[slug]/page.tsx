@@ -12,6 +12,12 @@ import { mdxComponents } from "@/mdx-components";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
 import { createArticleJsonLd, createMetadata, getResourceSlug } from "@/lib/seo";
 import Link from "next/link";
+import {
+  accentBackChevron,
+  accentBackLink,
+  accentChevronSm,
+  accentNavTitle,
+} from "@/lib/accent-classes";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function getSortedPosts() {
@@ -96,8 +102,8 @@ export default async function ResourcePage({
       />
       <BlurFade delay={0}>
         <div className="no-print flex justify-start gap-4 items-center">
-          <Link href="/resources" className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 mb-6 group" aria-label="Back to Resources">
-            <ChevronLeft className="size-3 group-hover:-translate-x-px transition-transform" />
+          <Link href="/resources" className={`${accentBackLink} mb-6`} aria-label="Back to Resources">
+            <ChevronLeft className={accentBackChevron} />
             Back to Resources
           </Link>
         </div>
@@ -136,11 +142,13 @@ export default async function ResourcePage({
                 href={`/resources/${getSlug(previousPost)}`}
                 className="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors"
               >
-                <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <ChevronLeft className="size-3" />
+                <span className="flex items-center gap-1 text-xs text-muted-foreground transition-colors group-hover:text-money-green">
+                  <ChevronLeft className={accentChevronSm} />
                   Previous
                 </span>
-                <span className="text-sm font-medium group-hover:text-foreground transition-colors whitespace-normal wrap-break-word">
+                <span
+                  className={`${accentNavTitle} whitespace-normal wrap-break-word`}
+                >
                   {previousPost.title}
                 </span>
               </Link>
@@ -153,11 +161,13 @@ export default async function ResourcePage({
                 href={`/resources/${getSlug(nextPost)}`}
                 className="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors text-right"
               >
-                <span className="flex items-center justify-end gap-1 text-xs text-muted-foreground">
+                <span className="flex items-center justify-end gap-1 text-xs text-muted-foreground transition-colors group-hover:text-money-green">
                   Next
-                  <ChevronRight className="size-3" />
+                  <ChevronRight className={accentChevronSm} />
                 </span>
-                <span className="text-sm font-medium group-hover:text-foreground transition-colors whitespace-normal wrap-break-word">
+                <span
+                  className={`${accentNavTitle} whitespace-normal wrap-break-word`}
+                >
                   {nextPost.title}
                 </span>
               </Link>

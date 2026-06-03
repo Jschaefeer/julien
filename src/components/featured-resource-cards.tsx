@@ -3,6 +3,13 @@
 import Link from "next/link";
 import { ArrowUpRight, LayoutGrid, Mail } from "lucide-react";
 import { DATA } from "@/data/resume";
+import {
+  accentArrowReveal,
+  accentCta,
+  accentCtaInner,
+  accentIcon,
+} from "@/lib/accent-classes";
+import { cn } from "@/lib/utils";
 
 type FeaturedResource = {
   type: string;
@@ -31,10 +38,10 @@ export function FeaturedResourceCards({
               {resource.description}
             </p>
           </div>
-          <span className="mt-1 inline-flex shrink-0 items-center text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
-            <span className="relative inline-flex items-center transition-transform duration-200 ease-out group-hover:-translate-x-1.5">
+          <span className={cn("mt-1 inline-flex shrink-0 items-center", accentCta)}>
+            <span className={accentCtaInner}>
               Get It
-              <ArrowUpRight className="absolute left-[calc(100%+2px)] top-1/2 size-3.5 -translate-x-2 -translate-y-1/2 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100" />
+              <ArrowUpRight className={accentArrowReveal} aria-hidden />
             </span>
           </span>
         </Link>
@@ -44,7 +51,7 @@ export function FeaturedResourceCards({
         href="/resources"
         className="group flex items-center gap-3 rounded-xl border p-5 font-medium transition-all duration-200 hover:ring-2 hover:ring-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
-        <LayoutGrid className="size-4 shrink-0 text-muted-foreground" />
+        <LayoutGrid className={cn("size-4", accentIcon)} />
         <span className="font-semibold tracking-tight">Browse the library</span>
       </Link>
 
@@ -53,7 +60,7 @@ export function FeaturedResourceCards({
         href={`mailto:${DATA.contact.email}`}
         className="group flex items-center gap-3 rounded-xl border p-5 font-medium transition-all duration-200 hover:ring-2 hover:ring-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
-        <Mail className="size-4 shrink-0 text-muted-foreground" />
+        <Mail className={cn("size-4", accentIcon)} />
         <span className="font-semibold tracking-tight">Contact Me</span>
       </Link>
     </div>

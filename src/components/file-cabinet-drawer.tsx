@@ -19,6 +19,13 @@ import {
   blurFadeHidden,
   blurFadeVisible,
 } from "@/lib/blur-fade";
+import {
+  accentArrowReveal,
+  accentCta,
+  accentCtaInner,
+  accentIcon,
+  accentTabLabel,
+} from "@/lib/accent-classes";
 import { cn } from "@/lib/utils";
 
 export type ArticlePreviewData = {
@@ -135,7 +142,7 @@ function FolderTab({
           "relative block truncate",
           active
             ? "text-foreground"
-            : "text-muted-foreground transition-colors duration-200 group-hover:text-foreground",
+            : accentTabLabel,
         )}
         animate={{ y: active ? -1 : 0 }}
         transition={
@@ -183,16 +190,16 @@ function LibraryTab({ touchStart }: { touchStart: boolean }) {
       href="/resources"
       className={cn(
         tabBaseClass,
-        "inline-flex items-center gap-1 text-muted-foreground",
+        "group inline-flex items-center gap-1 text-muted-foreground",
         "rounded-t-lg border border-border",
         touchStart ? "" : "-ml-px",
-        "bg-muted hover:bg-accent hover:text-foreground",
+        "bg-muted hover:bg-accent can-hover:hover:text-money-green",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
       )}
       title="Browse the library"
     >
       Library
-      <ArrowUpRight className="size-3 shrink-0 opacity-70" />
+      <ArrowUpRight className={cn("size-3 opacity-70", accentIcon)} />
     </Link>
   );
 }
@@ -200,13 +207,10 @@ function LibraryTab({ touchStart }: { touchStart: boolean }) {
 function ArticlePreviewFooter() {
   return (
     <div className="flex justify-end border-t border-border pt-4">
-      <span className="inline-flex shrink-0 items-center text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
-        <span className="relative inline-flex items-center transition-transform duration-200 ease-out group-hover:-translate-x-1.5">
+      <span className={cn("inline-flex shrink-0 items-center", accentCta)}>
+        <span className={accentCtaInner}>
           Read article
-          <ArrowUpRight
-            className="absolute left-[calc(100%+2px)] top-1/2 size-3.5 -translate-x-2 -translate-y-1/2 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100"
-            aria-hidden
-          />
+          <ArrowUpRight className={accentArrowReveal} aria-hidden />
         </span>
       </span>
     </div>

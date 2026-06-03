@@ -6,6 +6,13 @@ import type { Metadata } from "next";
 import { paginate, normalizePage } from "@/lib/pagination";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  accentBackChevron,
+  accentBackLink,
+  accentListChevron,
+  accentListTitle,
+  accentPaginationLink,
+} from "@/lib/accent-classes";
 import { createMetadata } from "@/lib/seo";
 
 const PAGE_SIZE = 5;
@@ -61,10 +68,10 @@ export default async function ResourcesPage({
         <div className="flex justify-start gap-4 items-center">
           <Link
             href="/"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 mb-6 group"
+            className={`${accentBackLink} mb-6`}
             aria-label="Back to Home"
           >
-            <ChevronLeft className="size-3 group-hover:-translate-x-px transition-transform" />
+            <ChevronLeft className={accentBackChevron} />
             Back to Home
           </Link>
         </div>
@@ -94,12 +101,9 @@ export default async function ResourcesPage({
                       </span>
                       <div className="flex flex-col gap-y-2 flex-1">
                         <p className="tracking-tight text-lg font-medium">
-                          <span className="group-hover:text-foreground transition-colors">
+                          <span className={accentListTitle}>
                             {post.title}
-                            <ChevronRight
-                              className="ml-1 inline-block size-4 stroke-3 text-muted-foreground opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0"
-                              aria-hidden
-                            />
+                            <ChevronRight className={accentListChevron} aria-hidden />
                           </span>
                         </p>
                       </div>
@@ -134,7 +138,7 @@ export default async function ResourcesPage({
                   {pagination.hasPreviousPage ? (
                     <Link
                       href={`/resources?page=${pagination.page - 1}`}
-                      className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg hover:bg-accent/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      className={accentPaginationLink}
                     >
                       Previous
                     </Link>
@@ -146,7 +150,7 @@ export default async function ResourcesPage({
                   {pagination.hasNextPage ? (
                     <Link
                       href={`/resources?page=${pagination.page + 1}`}
-                      className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg hover:bg-accent/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      className={accentPaginationLink}
                     >
                       Next
                     </Link>

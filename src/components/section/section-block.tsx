@@ -33,7 +33,11 @@ export function SectionGroup({
 }
 
 export function SectionHeading({ children }: { children: ReactNode }) {
-  return <h2 className="mb-section-header text-xl font-bold">{children}</h2>;
+  return (
+    <h2 className="section-heading mb-section-header text-xl font-bold">
+      {children}
+    </h2>
+  );
 }
 
 export function SectionContent({

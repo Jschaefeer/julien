@@ -4,24 +4,47 @@ import BlurFade from "@/components/magicui/blur-fade";
 import { DATA } from "@/data/resume";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
 import { getFooterAnimationStep } from "@/lib/footer-animation-step";
+import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+
+function FooterFranklinEyes() {
+  return (
+    <div className="site-footer__eyes" aria-hidden>
+      <div className="site-footer__eyes-media">
+        <Image
+          src="/footer/franklin-eyes2.jpg"
+          alt=""
+          fill
+          sizes="208px"
+          quality={90}
+          className="site-footer__eyes-img"
+          priority={false}
+        />
+      </div>
+    </div>
+  );
+}
 
 function FooterMarkup() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 text-center text-xs text-muted-foreground/60 space-y-0.5">
-      <p>
-        © {year} Copyright by {DATA.name}
+    <footer className="site-footer mt-24 text-center text-xs space-y-0.5">
+      <FooterFranklinEyes />
+      <p className="site-footer__copy">
+        <span className="site-footer__mark" aria-hidden>
+          ©
+        </span>{" "}
+        {year} Copyright by {DATA.name}
       </p>
-      <p>
+      <p className="site-footer__credit">
         Site designed by{" "}
         <a
           href="https://www.buzzedtech.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-muted-foreground transition-colors"
+          className="site-footer__link"
         >
           Buzzed Tech
         </a>

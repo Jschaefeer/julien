@@ -5,6 +5,7 @@ import {
 } from "@/components/section/about-section";
 import { getAboutExperienceStartDelay } from "@/lib/about-delays";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
+import { accentBackChevron, accentBackLink } from "@/lib/accent-classes";
 import { createMetadata } from "@/lib/seo";
 import { ChevronLeft } from "lucide-react";
 import type { Metadata } from "next";
@@ -28,10 +29,10 @@ export default function AboutPage() {
       <BlurFade delay={0}>
         <Link
           href="/"
-          className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 group"
+          className={accentBackLink}
           aria-label="Back to Home"
         >
-          <ChevronLeft className="size-3 group-hover:-translate-x-px transition-transform" />
+          <ChevronLeft className={accentBackChevron} />
           Back to Home
         </Link>
       </BlurFade>
