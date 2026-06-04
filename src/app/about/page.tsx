@@ -1,3 +1,11 @@
+import { notFound } from "next/navigation";
+
+// About page hidden — restore block below to re-enable.
+export default function AboutPage() {
+  notFound();
+}
+
+/*
 import BlurFade from "@/components/magicui/blur-fade";
 import {
   AboutPageHero,
@@ -43,3 +51,4 @@ export default function AboutPage() {
     </section>
   );
 }
+*/

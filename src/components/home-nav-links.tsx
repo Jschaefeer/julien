@@ -12,7 +12,7 @@ import { accentChevron } from "@/lib/accent-classes";
 import { cn } from "@/lib/utils";
 
 const HOME_LINKS = [
-  { href: "/about", label: "About" },
+  // { href: "/about", label: "About" },
   { href: "/resources", label: "Resources" },
 ] as const;
 

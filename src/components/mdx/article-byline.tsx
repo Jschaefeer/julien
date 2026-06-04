@@ -1,5 +1,5 @@
 import { ChecklistPrintButton } from "@/components/checklist-print-button";
-import Link from "next/link";
+// import Link from "next/link";
 import { DATA } from "@/data/resume";
 
 type ArticleBylineProps = {
@@ -22,12 +22,13 @@ export function ArticleByline({
         </span>
         <span className="text-muted-foreground/70">
           <span className="font-normal">By </span>
-          <Link
+          {/* <Link
             href="/about"
             className="font-medium text-money-green underline decoration-money-green/35 underline-offset-4 transition-colors hover:text-money-green hover:decoration-money-green/60"
           >
             {author}
-          </Link>
+          </Link> */}
+          <span className="font-medium text-money-green">{author}</span>
         </span>
       </p>
       {printChecklist ? (

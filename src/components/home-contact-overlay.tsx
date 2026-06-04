@@ -174,14 +174,15 @@ function ContactPanelContent({
       >
         {sent ? (
           <p className="text-pretty text-base leading-relaxed text-muted-foreground">
-            Thanks for reaching out.{" "}
+            Thanks for reaching out.
+            {/* {" "}
             <Link
               href="/about"
               className="font-medium text-foreground underline underline-offset-4 transition-colors can-hover:hover:text-foreground/80"
             >
               Learn more about {DATA.name}
             </Link>
-            .
+            . */}
           </p>
         ) : (
           <form
