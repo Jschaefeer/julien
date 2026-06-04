@@ -28,7 +28,13 @@ import BlurFade from "@/components/magicui/blur-fade";
 import { Badge } from "@/components/ui/badge";
 import { DATA } from "@/data/resume";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
-import { accentIcon } from "@/lib/accent-classes";
+import {
+  accentArrowReveal,
+  accentCtaInner,
+  accentPillIcon,
+  accentPillLink,
+  accentPillLinkLg,
+} from "@/lib/accent-classes";
 import { cn } from "@/lib/utils";
 
 function MetaItem({
@@ -264,9 +270,9 @@ function ContactLinks({
               href={link.href}
               target={link.external ? "_blank" : undefined}
               rel={link.external ? "noopener noreferrer" : undefined}
-              className="group inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium transition-colors can-hover:hover:bg-muted/50 can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className={accentPillLink}
             >
-              <link.icon className={cn("size-4", accentIcon)} />
+              <link.icon className={accentPillIcon} />
               {link.label}
             </a>
           </BlurFade>
@@ -286,9 +292,12 @@ function ContactLinks({
             href={link.href}
             target={link.external ? "_blank" : undefined}
             rel={link.external ? "noopener noreferrer" : undefined}
-            className="group flex items-center gap-3 rounded-xl border border-border p-4 transition-colors can-hover:hover:bg-muted/50 can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className={cn(
+              accentPillLink,
+              "gap-3 rounded-xl p-4",
+            )}
           >
-            <link.icon className={cn("size-4", accentIcon)} />
+            <link.icon className={accentPillIcon} />
             <span className="font-medium">{link.label}</span>
           </a>
         </BlurFade>
@@ -447,11 +456,11 @@ export function ExperienceEducationSection({
           <div className="flex justify-center pt-2">
             <Link
               href={`/resources/${DATA.featuredContent.slug}`}
-              className="group inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium transition-colors can-hover:hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className={accentPillLinkLg}
             >
-              <span className="relative inline-flex items-center transition-transform duration-200 ease-out group-hover:-translate-x-1.5">
+              <span className={accentCtaInner}>
                 Read {DATA.featuredContent.title}
-                <ArrowUpRight className="absolute left-[calc(100%+2px)] top-1/2 size-4 -translate-x-2 -translate-y-1/2 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100" />
+                <ArrowUpRight className={accentArrowReveal} aria-hidden />
               </span>
             </Link>
           </div>

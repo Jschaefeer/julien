@@ -1,4 +1,5 @@
 import BlurFade from "@/components/magicui/blur-fade";
+import { Badge } from "@/components/ui/badge";
 import { ResourcesComingSoonRow } from "@/components/resources-coming-soon-row";
 import { allPosts } from "content-collections";
 import Link from "next/link";
@@ -77,7 +78,12 @@ export default async function ResourcesPage({
         </div>
       </BlurFade>
       <BlurFade delay={BLUR_FADE_DELAY}>
-        <h1 className="text-2xl font-semibold tracking-tight mb-2">Resources <span className="ml-1 bg-card border border-border rounded-md px-2 py-1 text-muted-foreground text-sm">{sortedPosts.length} items</span></h1>
+        <h1 className="text-2xl font-semibold tracking-tight mb-2">
+          Resources{" "}
+          <Badge variant="outline" className="ml-1 align-middle text-sm">
+            {sortedPosts.length} items
+          </Badge>
+        </h1>
         <p className="text-sm text-muted-foreground mb-8">
           Guides, flyers, and content to help NIL athletes understand and protect their money.
         </p>

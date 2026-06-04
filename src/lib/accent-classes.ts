@@ -1,5 +1,11 @@
 /** Shared money-green hover accents for CTAs, chevrons, and nav links. */
 
+/** Featured section — full money-green or default text (no color-mix) */
+export const featuredSectionHeading =
+  "mb-section-header text-xl font-bold text-foreground";
+
+export const featuredTabActive = "text-money-green";
+
 export const accentCta =
   "text-sm font-medium text-muted-foreground transition-colors group-hover:text-money-green";
 
@@ -19,10 +25,31 @@ export const accentChevronMd =
   "size-5 shrink-0 text-muted-foreground transition-[color,transform] duration-200 group-hover:text-money-green";
 
 export const accentBackLink =
-  "group text-sm text-muted-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 can-hover:hover:text-money-green";
+  "group inline-flex items-center gap-1 rounded-lg border border-money-green/30 bg-card px-2 py-1 text-sm font-medium text-money-tan transition-colors can-hover:hover:text-money-green";
 
 export const accentBackChevron =
-  "size-3 shrink-0 text-muted-foreground transition-[color,transform] duration-200 group-hover:-translate-x-px group-hover:text-money-green";
+  "size-3 shrink-0 text-money-tan transition-[color,transform] duration-200 group-hover:-translate-x-px can-hover:group-hover:text-money-green";
+
+export const accentPillLink =
+  "group inline-flex items-center gap-2 rounded-lg border border-money-green/30 bg-card px-3 py-2 text-sm font-medium text-money-tan transition-colors can-hover:hover:bg-muted/50 can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+
+export const accentPillLinkLg =
+  "group inline-flex items-center gap-2 rounded-lg border border-money-green/30 bg-card px-5 py-2.5 text-sm font-medium text-money-tan transition-colors can-hover:hover:bg-muted/50 can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+
+export const accentPillCard =
+  "group flex flex-1 flex-col gap-1 rounded-lg border border-money-green/30 bg-card p-4 transition-colors can-hover:hover:bg-accent/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+
+export const accentPillCardMeta =
+  "flex items-center gap-1 text-xs font-medium text-money-tan transition-colors can-hover:group-hover:text-money-green";
+
+export const accentPillCardTitle =
+  "text-sm font-medium text-money-tan transition-colors can-hover:group-hover:text-money-green";
+
+export const accentPillIcon =
+  "size-4 shrink-0 text-money-tan transition-colors duration-200 can-hover:group-hover:text-money-green";
+
+export const accentPillChevron =
+  "size-3 shrink-0 text-money-tan transition-[color,transform] duration-200 can-hover:group-hover:text-money-green";
 
 export const accentNavTitle =
   "text-sm font-medium text-muted-foreground transition-colors group-hover:text-money-green";

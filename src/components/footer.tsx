@@ -13,15 +13,16 @@ function FooterFranklinEyes() {
     <div className="site-footer__eyes" aria-hidden>
       <div className="site-footer__eyes-media">
         <Image
-          src="/footer/franklin-eyes2.jpg"
+          src="/footer/franklin-eyes4.jpg"
           alt=""
           fill
-          sizes="208px"
+          sizes="(max-width: 640px) 94vw, 352px"
           quality={90}
           className="site-footer__eyes-img"
           priority={false}
         />
       </div>
+      <div className="site-footer__eyes-vignette" />
     </div>
   );
 }

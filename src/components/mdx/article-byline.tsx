@@ -24,7 +24,7 @@ export function ArticleByline({
           <span className="font-normal">By </span>
           <Link
             href="/about"
-            className="font-medium text-foreground/75 underline decoration-muted-foreground/30 underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground/50"
+            className="font-medium text-money-green underline decoration-money-green/35 underline-offset-4 transition-colors hover:text-money-green hover:decoration-money-green/60"
           >
             {author}
           </Link>

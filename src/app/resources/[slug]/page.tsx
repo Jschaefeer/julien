@@ -15,9 +15,12 @@ import Link from "next/link";
 import {
   accentBackChevron,
   accentBackLink,
-  accentChevronSm,
-  accentNavTitle,
+  accentPillCard,
+  accentPillCardMeta,
+  accentPillCardTitle,
+  accentPillChevron,
 } from "@/lib/accent-classes";
+import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function getSortedPosts() {
@@ -140,14 +143,14 @@ export default async function ResourcePage({
             {previousPost ? (
               <Link
                 href={`/resources/${getSlug(previousPost)}`}
-                className="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors"
+                className={accentPillCard}
               >
-                <span className="flex items-center gap-1 text-xs text-muted-foreground transition-colors group-hover:text-money-green">
-                  <ChevronLeft className={accentChevronSm} />
+                <span className={accentPillCardMeta}>
+                  <ChevronLeft className={accentPillChevron} />
                   Previous
                 </span>
                 <span
-                  className={`${accentNavTitle} whitespace-normal wrap-break-word`}
+                  className={`${accentPillCardTitle} whitespace-normal wrap-break-word`}
                 >
                   {previousPost.title}
                 </span>
@@ -159,14 +162,19 @@ export default async function ResourcePage({
             {nextPost ? (
               <Link
                 href={`/resources/${getSlug(nextPost)}`}
-                className="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors text-right"
+                className={cn(accentPillCard, "text-right")}
               >
-                <span className="flex items-center justify-end gap-1 text-xs text-muted-foreground transition-colors group-hover:text-money-green">
+                <span
+                  className={cn(
+                    accentPillCardMeta,
+                    "justify-end",
+                  )}
+                >
                   Next
-                  <ChevronRight className={accentChevronSm} />
+                  <ChevronRight className={accentPillChevron} />
                 </span>
                 <span
-                  className={`${accentNavTitle} whitespace-normal wrap-break-word`}
+                  className={`${accentPillCardTitle} whitespace-normal wrap-break-word`}
                 >
                   {nextPost.title}
                 </span>

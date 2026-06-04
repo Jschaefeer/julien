@@ -46,6 +46,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-money-green: var(--money-green);
   --color-money-green-muted: var(--money-green-muted);
+  --color-money-tan: var(--money-tan);
 }
 
 :root {
@@ -82,9 +83,10 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --money-green: oklch(0.42 0.09 152);
-  --money-green-muted: oklch(0.48 0.05 152);
-  --money-green-border: oklch(0.42 0.07 152 / 0.14);
+  --money-green: oklch(0.38 0.17 152);
+  --money-green-muted: oklch(0.42 0.12 152);
+  --money-tan: oklch(0.4 0.14 150);
+  --money-green-border: oklch(0.38 0.14 152 / 0.32);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -123,6 +125,7 @@
     --sidebar-ring: oklch(0.556 0 0);
     --money-green: oklch(0.55 0.1 152);
     --money-green-muted: oklch(0.62 0.06 152);
+    --money-tan: oklch(0.7 0.06 95);
     --money-green-border: oklch(0.55 0.08 152 / 0.18);
   }
 }
@@ -566,83 +569,6 @@
     color: color-mix(in oklch, var(--money-green-muted) 55%, var(--money-green) 45%);
   }
 
-  .site-footer__eyes {
-    --footer-eyes-zoom: 1.35;
-    --footer-eyes-shift-y: -6%;
-    --footer-eyes-shift-x: -4%;
-    --footer-eyes-mask: radial-gradient(
-      ellipse 62% 74% at 50% 50%,
-      #000 0%,
-      #000 16%,
-      rgb(0 0 0 / 0.94) 32%,
-      rgb(0 0 0 / 0.7) 46%,
-      rgb(0 0 0 / 0.34) 60%,
-      rgb(0 0 0 / 0.1) 74%,
-      transparent 90%
-    ),
-    linear-gradient(
-      to right,
-      transparent 0%,
-      rgb(0 0 0 / 0.28) 12%,
-      rgb(0 0 0 / 0.72) 22%,
-      #000 30%,
-      #000 70%,
-      rgb(0 0 0 / 0.72) 78%,
-      rgb(0 0 0 / 0.28) 88%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgb(0 0 0 / 0.22) 10%,
-      rgb(0 0 0 / 0.58) 18%,
-      #000 30%,
-      #000 70%,
-      rgb(0 0 0 / 0.58) 82%,
-      rgb(0 0 0 / 0.22) 90%,
-      transparent 100%
-    );
-    position: relative;
-    width: min(13.5rem, 82vw);
-    height: 4.75rem;
-    margin-inline: auto;
-    margin-bottom: 0.75rem;
-    overflow: visible;
-  }
-
-  .site-footer__eyes-media {
-    position: absolute;
-    inset: 0;
-    overflow: visible;
-    -webkit-mask-image: var(--footer-eyes-mask);
-    mask-image: var(--footer-eyes-mask);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    -webkit-mask-mode: alpha;
-    mask-mode: alpha;
-    -webkit-mask-composite: source-in;
-    mask-composite: intersect;
-  }
-
-  .site-footer__eyes img {
-    object-fit: cover;
-    object-position: center 0%;
-    transform: scale(var(--footer-eyes-zoom))
-      translate(var(--footer-eyes-shift-x), var(--footer-eyes-shift-y));
-    transform-origin: 50% 50%;
-    filter: sepia(0.38) hue-rotate(58deg) saturate(1.55) contrast(1.12)
-      brightness(0.9);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .site-footer__eyes img {
-      filter: sepia(0.32) hue-rotate(54deg) saturate(1.58) contrast(1.14)
-        brightness(0.98);
-    }
-  }
-
   .site-footer__link {
     color: color-mix(in oklch, var(--muted-foreground) 62%, var(--money-green) 8%);
     transition: color 0.2s ease;
@@ -652,4 +578,59 @@
     color: color-mix(in oklch, var(--muted-foreground) 48%, var(--money-green) 22%);
   }
 
+}
+
+/* Footer Franklin eyes — outside @layer so transforms and vignette always apply */
+.site-footer__eyes {
+  position: relative;
+  /* Match franklin-eyes4.jpg (eyes centered crop) */
+  width: min(22rem, 94vw);
+  height: calc(min(22rem, 94vw) * 80 / 307);
+  margin-inline: auto;
+  margin-bottom: 0.75rem;
+}
+
+.site-footer__eyes-media {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.site-footer__eyes-img {
+  object-fit: cover !important;
+  object-position: center 40% !important;
+  transform: none !important;
+  filter: sepia(0.38) hue-rotate(58deg) saturate(1.6) contrast(1.14)
+    brightness(1.05);
+}
+
+.site-footer__eyes-vignette {
+  position: absolute;
+  inset: -6% -8%;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 68% 58% at 50% 46%,
+      transparent 0%,
+      transparent 40%,
+      color-mix(in oklch, var(--background) 48%, transparent) 56%,
+      color-mix(in oklch, var(--background) 84%, transparent) 72%,
+      var(--background) 92%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--background) 55%, transparent) 0%,
+      transparent 20%,
+      transparent 80%,
+      color-mix(in oklch, var(--background) 50%, transparent) 100%
+    );
+}
+
+@media (prefers-color-scheme: dark) {
+  .site-footer__eyes-img {
+    filter: sepia(0.32) hue-rotate(54deg) saturate(1.62) contrast(1.16)
+      brightness(1.08);
+  }
 }

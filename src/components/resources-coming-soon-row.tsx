@@ -1,3 +1,5 @@
+import { Badge } from "@/components/ui/badge";
+
 type ResourcesComingSoonRowProps = {
   index: number;
   placeholderTitle?: string;
@@ -19,9 +21,9 @@ export function ResourcesComingSoonRow({
         >
           {placeholderTitle}
         </p>
-        <span className="mt-0.5 shrink-0 rounded-md border border-border bg-card px-2 py-1 text-xs text-muted-foreground">
+        <Badge variant="outline" className="mt-0.5 shrink-0">
           Coming soon
-        </span>
+        </Badge>
       </div>
     </div>
   );

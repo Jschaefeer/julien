@@ -25,6 +25,7 @@ import {
   accentCtaInner,
   accentIcon,
   accentTabLabel,
+  featuredTabActive,
 } from "@/lib/accent-classes";
 import { cn } from "@/lib/utils";
 
@@ -140,9 +141,7 @@ function FolderTab({
       <motion.span
         className={cn(
           "relative block truncate",
-          active
-            ? "text-foreground"
-            : accentTabLabel,
+          active ? featuredTabActive : accentTabLabel,
         )}
         animate={{ y: active ? -1 : 0 }}
         transition={
@@ -226,7 +225,7 @@ function ArticlePreviewCard({ article }: { article: ArticlePreviewData }) {
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 space-y-2">
           {article.label ? (
-            <Badge variant="outline" className="text-xs font-medium">
+            <Badge variant="outline">
               {article.label}
             </Badge>
           ) : null}
