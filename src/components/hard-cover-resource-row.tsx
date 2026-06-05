@@ -4,15 +4,18 @@ import {
   accentListTitle,
   resourcesListIndex,
 } from "@/lib/accent-classes";
-import { HARD_COVER_DRIVE_URL } from "@/lib/resource-downloads";
+import { RESOURCE_DOWNLOADS } from "@/lib/resource-downloads";
 import { BookOpen, ChevronRight } from "lucide-react";
+
+const hardCoverDownload =
+  RESOURCE_DOWNLOADS["what-to-do-with-all-this-money"][0];
 
 export function HardCoverResourceRow() {
   return (
     <a
-      href={HARD_COVER_DRIVE_URL}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={encodeURI(hardCoverDownload.href)}
+      download={hardCoverDownload.filename}
+      aria-label="Download Hard cover"
       className="flex items-start gap-x-2 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
       <span className={resourcesListIndex} aria-hidden>
