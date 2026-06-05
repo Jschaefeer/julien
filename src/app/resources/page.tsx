@@ -1,5 +1,4 @@
 import BlurFade from "@/components/magicui/blur-fade";
-import { Badge } from "@/components/ui/badge";
 import { ResourcesComingSoonRow } from "@/components/resources-coming-soon-row";
 import { allPosts } from "content-collections";
 import Link from "next/link";
@@ -13,7 +12,9 @@ import {
   accentListChevron,
   accentListTitle,
   accentPaginationLink,
+  resourcesListIndex,
 } from "@/lib/accent-classes";
+import { HardCoverResourceRow } from "@/components/hard-cover-resource-row";
 import { createMetadata } from "@/lib/seo";
 
 const PAGE_SIZE = 5;
@@ -78,12 +79,7 @@ export default async function ResourcesPage({
         </div>
       </BlurFade>
       <BlurFade delay={BLUR_FADE_DELAY}>
-        <h1 className="text-2xl font-semibold tracking-tight mb-2">
-          Resources{" "}
-          <Badge variant="outline" className="ml-1 align-middle text-sm">
-            {sortedPosts.length} items
-          </Badge>
-        </h1>
+        <h1 className="text-2xl font-semibold tracking-tight mb-2">Resources</h1>
         <p className="text-sm text-muted-foreground mb-8">
           Guides, flyers, and content to help NIL athletes understand and protect their money.
         </p>
@@ -93,6 +89,11 @@ export default async function ResourcesPage({
         <>
           <BlurFade delay={BLUR_FADE_DELAY * 2}>
             <div className="flex flex-col gap-5">
+              {pagination.page === 1 ? (
+                <BlurFade delay={BLUR_FADE_DELAY * 3}>
+                  <HardCoverResourceRow />
+                </BlurFade>
+              ) : null}
               {paginatedPosts.map((post, id) => {
                 const slug = post._meta.path.replace(/\.mdx$/, "");
                 const indexNumber = (pagination.page - 1) * PAGE_SIZE + id + 1;
@@ -102,7 +103,7 @@ export default async function ResourcesPage({
                       className="flex items-start gap-x-2 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                       href={`/resources/${slug}`}
                     >
-                      <span className="text-xs font-mono tabular-nums font-medium mt-[5px]">
+                      <span className={resourcesListIndex}>
                         {String(indexNumber).padStart(2, "0")}.
                       </span>
                       <div className="flex flex-col gap-y-2 flex-1">

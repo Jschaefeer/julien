@@ -69,11 +69,11 @@ export const DATA = {
     // { href: "/about", icon: UserIcon, label: "About" },
   ],
   featuredContent: {
-    title: "The NIL Dispatch",
+    title: "The Nil dispatch",
     label: "Checklist",
     slug: "nil-dispatch",
     description:
-      "A step-by-step checklist to track every deal, keep NIL income in a separate account, and set aside 20–30% for taxes before you spend. Covers FDIC insurance, quarterly tax payments, credit basics, and how to vet the CPA, lawyer, and advisor on your team.",
+      "A step-by-step checklist designed to help you, the athlete, empower yourself through financial knowledge. This guide helps you start asking the right questions. Without a basic understanding of your money, you can be manipulated, scammed, or put in financially compromising situations. The goal is simple: to equip you with the awareness, confidence, and tools needed to protect what you've earned and build the future you deserve.",
     cost: "Free",
     audience: "NIL Athletes",
     pillars: "5",
@@ -82,9 +82,9 @@ export const DATA = {
   featuredResources: [
     {
       type: "Guide",
-      title: "What To Do With All This Money?",
+      title: "What to Do With All This Money?",
       description:
-        "Walk through five pillars of NIL money management: what's coming in, where it's going, who handles it, tax obligations, and planning beyond your playing career. Learn to spot bad actors and unqualified advice before they cost you—about ten minutes, zero cost.",
+        "This section takes things a step further by providing a deeper look into the core pillars of NIL money management. What's coming in? Where is it going? Who is handling it? What are the tax implications?\n\nThe more you earn, the more important it becomes to understand the systems surrounding your finances. This guide is designed to help you move beyond simply making money and toward managing it with purpose. By developing a clear understanding of cash flow, taxes, budgeting, savings, investments, and your professional support team, you'll be better equipped to make informed decisions, avoid costly mistakes, and turn today's opportunities into long-term financial security.",
       slug: "what-to-do-with-all-this-money",
       audience: "NIL Athletes",
       pillars: "5",

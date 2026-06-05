@@ -1,5 +1,8 @@
 import BlurFade from "@/components/magicui/blur-fade";
-import { ChecklistPrintButton } from "@/components/checklist-print-button";
+import {
+  isResourceArticleActionsVariant,
+  ResourceArticleActions,
+} from "@/components/resource-article-actions";
 import { JsonLd } from "@/components/json-ld";
 import { NilChecklistArticle } from "@/components/nil-checklist-article";
 import { NilChecklistInput } from "@/components/mdx/nil-checklist-input";
@@ -90,6 +93,7 @@ export default async function ResourcePage({
     post._meta.path.replace(/\.mdx$/, "");
 
   const isNilChecklist = slug === "nil-dispatch";
+  const actionsVariant = isResourceArticleActionsVariant(slug) ? slug : null;
 
   return (
     <section id="resources">
@@ -116,8 +120,11 @@ export default async function ResourcePage({
           <h1 className="no-print title font-semibold text-3xl md:text-4xl tracking-tighter leading-tight">
             {post.title}
           </h1>
-          {isNilChecklist ? (
-            <ChecklistPrintButton className="hidden sm:inline-flex" />
+          {actionsVariant ? (
+            <ResourceArticleActions
+              variant={actionsVariant}
+              className="mt-0 hidden sm:flex sm:justify-end"
+            />
           ) : null}
         </div>
       </BlurFade>

@@ -30,6 +30,18 @@ export const accentBackLink =
 export const accentBackChevron =
   "size-3 shrink-0 text-money-tan transition-[color,transform] duration-200 group-hover:-translate-x-px can-hover:group-hover:text-money-green";
 
+export const accentControlButton =
+  "group inline-flex w-fit items-center gap-1 rounded-lg border border-money-green/30 bg-card px-2.5 py-1.5 text-xs font-medium text-money-tan transition-colors can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+
+export const accentActionButtonLg =
+  "group inline-flex shrink-0 items-center gap-2 rounded-lg border border-money-green/30 bg-card px-5 py-2.5 text-sm font-medium text-money-tan transition-colors can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+
+/** Resource article actions — full label on mobile, icon-only from `sm` up. */
+export const resourceActionButton =
+  "group inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-lg border border-money-green/30 bg-card px-5 py-2.5 text-sm font-medium text-money-tan transition-colors can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:w-auto sm:justify-center sm:px-2.5 sm:py-2.5";
+
+export const resourceActionButtonLabel = "sm:hidden";
+
 export const accentPillLink =
   "group inline-flex items-center gap-2 rounded-lg border border-money-green/30 bg-card px-3 py-2 text-sm font-medium text-money-tan transition-colors can-hover:hover:bg-muted/50 can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
@@ -68,6 +80,10 @@ export const accentTabLabel =
 
 export const accentListChevron =
   "ml-1 inline-block size-4 stroke-3 text-muted-foreground opacity-0 -translate-x-2 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 group-hover:text-money-green";
+
+/** Fixed-width index column for numbered and icon resource rows. */
+export const resourcesListIndex =
+  "mt-[5px] inline-block w-[3ch] shrink-0 text-left text-xs font-mono tabular-nums font-medium text-foreground leading-none";
 
 export const accentPaginationLink =
   "group h-8 w-fit px-2 flex items-center justify-center text-sm text-muted-foreground border border-border rounded-lg transition-colors can-hover:hover:bg-accent/50 can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";

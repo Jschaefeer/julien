@@ -1,5 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import {
+  accentPillIcon,
+  resourceActionButton,
+  resourceActionButtonLabel,
+} from "@/lib/accent-classes";
 import { cn } from "@/lib/utils";
 import { Printer } from "lucide-react";
 
@@ -7,18 +13,27 @@ type ChecklistPrintButtonProps = {
   className?: string;
 };
 
+/** Screen-only control — omitted from SSR/HTML exports (e.g. email generation). */
 export function ChecklistPrintButton({ className }: ChecklistPrintButtonProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <button
       type="button"
-      className={cn(
-        "no-print inline-flex shrink-0 items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium transition-colors can-hover:hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-        className
-      )}
+      aria-label="Print checklist"
+      className={cn("checklist-print-button no-print", resourceActionButton, className)}
       onClick={() => window.print()}
     >
-      <Printer className="size-4" aria-hidden />
-      Print checklist
+      <Printer className={cn("size-4", accentPillIcon)} aria-hidden />
+      <span className={resourceActionButtonLabel}>Print checklist</span>
     </button>
   );
 }

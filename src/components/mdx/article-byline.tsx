@@ -1,17 +1,20 @@
-import { ChecklistPrintButton } from "@/components/checklist-print-button";
+import {
+  ResourceArticleActions,
+  type ResourceArticleActionsVariant,
+} from "@/components/resource-article-actions";
 // import Link from "next/link";
 import { DATA } from "@/data/resume";
 
 type ArticleBylineProps = {
   title: string;
   author?: string;
-  printChecklist?: boolean;
+  actions?: ResourceArticleActionsVariant;
 };
 
 export function ArticleByline({
   title,
   author = DATA.fullName,
-  printChecklist = false,
+  actions,
 }: ArticleBylineProps) {
   return (
     <div className="not-prose mb-8">
@@ -31,8 +34,10 @@ export function ArticleByline({
           <span className="font-medium text-money-green">{author}</span>
         </span>
       </p>
-      {printChecklist ? (
-        <ChecklistPrintButton className="mt-4 w-full justify-center sm:hidden" />
+      {actions ? (
+        <div className="sm:hidden">
+          <ResourceArticleActions variant={actions} />
+        </div>
       ) : null}
     </div>
   );

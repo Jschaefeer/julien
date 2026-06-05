@@ -236,7 +236,7 @@ function ArticlePreviewCard({ article }: { article: ArticlePreviewData }) {
         </div>
       </div>
 
-      <p className="line-clamp-6 text-sm leading-relaxed text-muted-foreground">
+      <p className="whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
         {article.excerpt}
       </p>
 
