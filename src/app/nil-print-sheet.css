@@ -47,6 +47,12 @@
     display: none !important;
   }
 
+  .no-print,
+  .checklist-print-button {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
   footer:not(.nil-print-footer),
   .pointer-events-none.fixed {
     display: none !important;

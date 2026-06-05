@@ -8,7 +8,6 @@ import {
   HomeContactOverlay,
   type ContactOriginRect,
 } from "@/components/home-contact-overlay";
-import { HomeNavLinks } from "@/components/home-nav-links";
 import { PillarFanAvatars } from "@/components/pillar-fan-avatars";
 import FeaturedResourcesSection from "@/components/section/featured-resources-section";
 import { DATA } from "@/data/resume";
@@ -33,8 +32,7 @@ export function HomePageClient() {
   const contactButtonRef = useRef<HTMLButtonElement>(null);
   const contactLocked = contactOpen || overlayPresent;
 
-  const linksDelay = BLUR_FADE_DELAY * 2;
-  const featuredDelay = linksDelay + BLUR_FADE_DELAY * 3;
+  const featuredDelay = BLUR_FADE_DELAY * 2;
 
   const openContact = useCallback((origin: ContactOriginRect) => {
     setContactOrigin(origin);
@@ -83,17 +81,16 @@ export function HomePageClient() {
               </p>
             </BlurFade>
 
-            <HomeNavLinks
-              baseDelay={linksDelay}
-              contactOpen={contactOpen}
-              contactLocked={contactLocked}
-              contactButtonRef={contactButtonRef}
-              onContactOpen={openContact}
-            />
           </div>
         </section>
 
-        <FeaturedResourcesSection baseDelay={featuredDelay} />
+        <FeaturedResourcesSection
+          baseDelay={featuredDelay}
+          contactOpen={contactOpen}
+          contactLocked={contactLocked}
+          contactButtonRef={contactButtonRef}
+          onContactOpen={openContact}
+        />
       </main>
 
       <HomeContactOverlay

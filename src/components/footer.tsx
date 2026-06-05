@@ -23,6 +23,7 @@ function FooterFranklinEyes() {
         />
       </div>
       <div className="site-footer__eyes-vignette" />
+      <div className="site-footer__eyes-vignette-cap" />
     </div>
   );
 }

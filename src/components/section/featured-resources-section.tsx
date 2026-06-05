@@ -1,25 +1,42 @@
+import type { RefObject } from "react";
+
 import BlurFade from "@/components/magicui/blur-fade";
 import { FileCabinet } from "@/components/file-cabinet";
+import type { ContactOriginRect } from "@/components/home-contact-overlay";
+import { HomeContactButton } from "@/components/home-nav-links";
 import { SectionBlock, SectionContent } from "@/components/section/section-block";
-import { featuredSectionHeading } from "@/lib/accent-classes";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
 
 export default function FeaturedResourcesSection({
   baseDelay = BLUR_FADE_DELAY * 5,
+  contactOpen,
+  contactLocked,
+  contactButtonRef,
+  onContactOpen,
 }: {
   baseDelay?: number;
+  contactOpen: boolean;
+  contactLocked: boolean;
+  contactButtonRef: RefObject<HTMLButtonElement | null>;
+  onContactOpen: (origin: ContactOriginRect) => void;
 }) {
-  return (
-    <SectionBlock id="resources">
-      <BlurFade delay={baseDelay}>
-        <h2 className={featuredSectionHeading}>Featured Resources</h2>
-      </BlurFade>
+  const contactDelay = baseDelay + BLUR_FADE_DELAY;
 
-      <BlurFade delay={baseDelay + BLUR_FADE_DELAY}>
+  return (
+    <SectionBlock id="resources" className="gap-3">
+      <BlurFade delay={baseDelay}>
         <SectionContent>
           <FileCabinet />
         </SectionContent>
       </BlurFade>
+
+      <HomeContactButton
+        baseDelay={contactDelay}
+        contactOpen={contactOpen}
+        contactLocked={contactLocked}
+        contactButtonRef={contactButtonRef}
+        onContactOpen={onContactOpen}
+      />
     </SectionBlock>
   );
 }

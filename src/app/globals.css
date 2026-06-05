@@ -472,8 +472,33 @@
     left: 0;
     top: 0.35rem;
     margin: 0 !important;
-    accent-color: var(--foreground);
+    width: 0.8125rem;
+    height: 0.8125rem;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--card);
+    border: 1px solid var(--money-green-border);
+    border-radius: 0.125rem;
     cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .nil-checklist
+    :where(li.task-list-item > p > input[type="checkbox"]:checked):not(:where([class~="not-prose"] *)),
+  .nil-checklist :where(li.task-list-item > input[type="checkbox"]:checked):not(:where([class~="not-prose"] *)) {
+    background-color: var(--money-green);
+    border-color: var(--money-green);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.5L6.5 11.5L12.5 4.5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0.625rem;
+  }
+
+  .nil-checklist
+    :where(li.task-list-item > p > input[type="checkbox"]:focus-visible):not(:where([class~="not-prose"] *)),
+  .nil-checklist :where(li.task-list-item > input[type="checkbox"]:focus-visible):not(:where([class~="not-prose"] *)) {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
   }
 
   .nil-checklist :where(li.task-list-item > input[type="checkbox"]):not(:where([class~="not-prose"] *)) {
@@ -595,6 +620,38 @@
   inset: 0;
   z-index: 1;
   overflow: hidden;
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 16%,
+      #000 90%,
+      transparent 100%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      #000 20%,
+      #000 80%,
+      transparent 100%
+    );
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 16%,
+      #000 90%,
+      transparent 100%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      #000 20%,
+      #000 80%,
+      transparent 100%
+    );
+  mask-composite: intersect;
 }
 
 .site-footer__eyes-img {
@@ -607,25 +664,55 @@
 
 .site-footer__eyes-vignette {
   position: absolute;
-  inset: -6% -8%;
+  inset: -6% -10%;
   z-index: 2;
   pointer-events: none;
   background:
-    radial-gradient(
-      ellipse 68% 58% at 50% 46%,
-      transparent 0%,
-      transparent 40%,
-      color-mix(in oklch, var(--background) 48%, transparent) 56%,
-      color-mix(in oklch, var(--background) 84%, transparent) 72%,
-      var(--background) 92%
-    ),
     linear-gradient(
       180deg,
       color-mix(in oklch, var(--background) 55%, transparent) 0%,
       transparent 20%,
       transparent 80%,
       color-mix(in oklch, var(--background) 50%, transparent) 100%
+    ),
+    linear-gradient(
+      90deg,
+      var(--background) 0%,
+      color-mix(in oklch, var(--background) 72%, transparent) 10%,
+      color-mix(in oklch, var(--background) 28%, transparent) 22%,
+      transparent 30%,
+      transparent 78%,
+      color-mix(in oklch, var(--background) 22%, transparent) 88%,
+      color-mix(in oklch, var(--background) 58%, transparent) 95%,
+      var(--background) 100%
+    ),
+    radial-gradient(
+      ellipse 72% 58% at 50% 46%,
+      transparent 0%,
+      transparent 44%,
+      color-mix(in oklch, var(--background) 38%, transparent) 58%,
+      color-mix(in oklch, var(--background) 72%, transparent) 74%,
+      var(--background) 94%
     );
+}
+
+/* Top/bottom bar fade — separate from radial + soft vertical vignette */
+.site-footer__eyes-vignette-cap {
+  position: absolute;
+  inset: -12% -6%;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    var(--background) 0%,
+    color-mix(in oklch, var(--background) 72%, transparent) 12%,
+    color-mix(in oklch, var(--background) 28%, transparent) 24%,
+    transparent 32%,
+    transparent 68%,
+    color-mix(in oklch, var(--background) 28%, transparent) 76%,
+    color-mix(in oklch, var(--background) 72%, transparent) 88%,
+    var(--background) 100%
+  );
 }
 
 @media (prefers-color-scheme: dark) {

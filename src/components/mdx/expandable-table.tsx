@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ComponentProps, type Ref } from "react";
 import { createPortal, flushSync } from "react-dom";
 import { Maximize2, X } from "lucide-react";
-import { accentToggle } from "@/lib/accent-classes";
+import { accentControlButton, accentPillIcon } from "@/lib/accent-classes";
 import { cn } from "@/lib/utils";
 
 type Rect = {
@@ -356,12 +356,9 @@ export function ExpandableTable(props: ComponentProps<"table">) {
             onClick={openLightbox}
             aria-label="Expand table to full screen"
             aria-expanded={open}
-            className={cn(
-              accentToggle,
-              "rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs shadow-sm can-hover:hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-            )}
+            className={accentControlButton}
           >
-            <Maximize2 className="size-3.5" aria-hidden />
+            <Maximize2 className={cn("size-3.5", accentPillIcon)} aria-hidden />
             Full screen
           </button>
         </div>

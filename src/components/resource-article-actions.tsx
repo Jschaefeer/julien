@@ -1,7 +1,6 @@
 import { ChecklistPrintButton } from "@/components/checklist-print-button";
-import { ResourceBundleDownloadButton } from "@/components/resource-bundle-download-button";
 import { ResourceDownloadButton } from "@/components/resource-download-button";
-import { NIL_FLYER_DOWNLOADS, RESOURCE_DOWNLOADS } from "@/lib/resource-downloads";
+import { RESOURCE_DOWNLOADS } from "@/lib/resource-downloads";
 import { cn } from "@/lib/utils";
 
 export type ResourceArticleActionsVariant =
@@ -23,8 +22,8 @@ export function ResourceArticleActions({
   variant,
   className,
 }: ResourceArticleActionsProps) {
-  const isNilChecklist = variant === "nil-dispatch";
   const downloads = RESOURCE_DOWNLOADS[variant] ?? [];
+  const isNilChecklist = variant === "nil-dispatch";
 
   return (
     <div
@@ -33,12 +32,6 @@ export function ResourceArticleActions({
         className,
       )}
     >
-      {isNilChecklist ? (
-        <ResourceBundleDownloadButton
-          downloads={NIL_FLYER_DOWNLOADS}
-          label="Download flyer"
-        />
-      ) : null}
       {downloads.map((download) => (
         <ResourceDownloadButton key={download.href} download={download} />
       ))}
