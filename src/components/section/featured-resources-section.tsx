@@ -4,7 +4,11 @@ import BlurFade from "@/components/magicui/blur-fade";
 import { FileCabinet } from "@/components/file-cabinet";
 import type { ContactOriginRect } from "@/components/home-contact-overlay";
 import { HomeContactButton } from "@/components/home-nav-links";
-import { SectionBlock, SectionContent } from "@/components/section/section-block";
+import {
+  SectionBlock,
+  SectionContent,
+  SectionHeading,
+} from "@/components/section/section-block";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
 
 export default function FeaturedResourcesSection({
@@ -25,6 +29,9 @@ export default function FeaturedResourcesSection({
   return (
     <SectionBlock id="resources" className="gap-3">
       <BlurFade delay={baseDelay}>
+        <SectionHeading>Featured Resources</SectionHeading>
+      </BlurFade>
+      <BlurFade delay={baseDelay + BLUR_FADE_DELAY * 0.5}>
         <SectionContent>
           <FileCabinet />
         </SectionContent>

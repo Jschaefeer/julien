@@ -69,7 +69,7 @@ export function HomePageClient() {
                     NIL Money Guide
                   </h1>
                   <p className="text-lg text-muted-foreground sm:text-xl">
-                    by {DATA.name}
+                    By {DATA.name}
                   </p>
                 </div>
               </div>

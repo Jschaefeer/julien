@@ -29,7 +29,8 @@ export function FileCabinet() {
       {
         slug,
         title: post.title,
-        tabLabel: meta?.title ?? post.title,
+        tabLabel:
+          (meta && "tabLabel" in meta && meta.tabLabel) || post.title,
         summary: post.summary,
         excerpt: meta?.description ?? extractArticleExcerpt(post.content),
         label: isFeatured ? DATA.featuredContent.label : resource?.type,

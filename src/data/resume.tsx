@@ -8,7 +8,7 @@ export const DATA = {
   url: "https://nilmoneyguide.com",
   tags: ["NIL", "Financial Literacy", "Sports Business", "Content"],
   description:
-    "Free NIL financial literacy for college athletes. Guides to manage deals, taxes, and protect your money.",
+    "Learn how to keep, grow, and protect your NIL earnings.",
   summary:
     "Julian Palmer creates financial literacy content for college athletes navigating NIL deals, contracts, and sudden income. Through **The NIL Dispatch**, he breaks down money management into clear, actionable guidance so athletes can protect what they earn.",
   education: [
@@ -69,11 +69,12 @@ export const DATA = {
     // { href: "/about", icon: UserIcon, label: "About" },
   ],
   featuredContent: {
-    title: "The Nil dispatch",
+    title: "The NIL Dispatch",
+    tabLabel: "Start Here",
     label: "Checklist",
     slug: "nil-dispatch",
     description:
-      "A step-by-step checklist designed to help you, the athlete, empower yourself through financial knowledge. This guide helps you start asking the right questions. Without a basic understanding of your money, you can be manipulated, scammed, or put in financially compromising situations. The goal is simple: to equip you with the awareness, confidence, and tools needed to protect what you've earned and build the future you deserve.",
+      "A step-by-step guide to understanding your money, avoiding costly mistakes, and building a strong financial foundation.\n\n• Understand your income\n• Learn the basics of taxes\n• Build your support team\n• Protect yourself from scams",
     cost: "Free",
     audience: "NIL Athletes",
     pillars: "5",
@@ -82,7 +83,7 @@ export const DATA = {
   featuredResources: [
     {
       type: "Guide",
-      title: "The Money Journey",
+      tabLabel: "The Playbook",
       description:
         "This section takes things a step further by providing a deeper look into the core pillars of NIL money management. What's coming in? Where is it going? Who is handling it? What are the tax implications?\n\nThe more you earn, the more important it becomes to understand the systems surrounding your finances. This guide is designed to help you move beyond simply making money and toward managing it with purpose. By developing a clear understanding of cash flow, taxes, budgeting, savings, investments, and your professional support team, you'll be better equipped to make informed decisions, avoid costly mistakes, and turn today's opportunities into long-term financial security.",
       slug: "what-to-do-with-all-this-money",
