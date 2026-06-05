@@ -1,4 +1,3 @@
-import { ChecklistPrintButton } from "@/components/checklist-print-button";
 import { ResourceDownloadButton } from "@/components/resource-download-button";
 import { RESOURCE_DOWNLOADS } from "@/lib/resource-downloads";
 import { cn } from "@/lib/utils";
@@ -23,7 +22,6 @@ export function ResourceArticleActions({
   className,
 }: ResourceArticleActionsProps) {
   const downloads = RESOURCE_DOWNLOADS[variant] ?? [];
-  const isNilChecklist = variant === "nil-dispatch";
 
   return (
     <div
@@ -35,7 +33,6 @@ export function ResourceArticleActions({
       {downloads.map((download) => (
         <ResourceDownloadButton key={download.href} download={download} />
       ))}
-      {isNilChecklist ? <ChecklistPrintButton /> : null}
     </div>
   );
 }

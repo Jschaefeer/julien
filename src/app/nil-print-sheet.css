@@ -47,8 +47,7 @@
     display: none !important;
   }
 
-  .no-print,
-  .checklist-print-button {
+  .no-print {
     display: none !important;
     visibility: hidden !important;
   }
