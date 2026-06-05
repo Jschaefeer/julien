@@ -38,7 +38,7 @@ export const accentActionButtonLg =
 
 /** Resource article actions — full label on mobile, icon-only from `sm` up. */
 export const resourceActionButton =
-  "group inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-lg border border-money-green/30 bg-card px-5 py-2.5 text-sm font-medium text-money-tan transition-colors can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:w-auto sm:justify-center sm:px-2.5 sm:py-2.5";
+  "group inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-lg border border-money-green/30 bg-card px-5 py-2.5 text-sm font-medium text-money-tan no-underline transition-colors can-hover:hover:text-money-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:w-auto sm:justify-center sm:px-2.5 sm:py-2.5";
 
 export const resourceActionButtonLabel = "sm:hidden";
 
