@@ -8,7 +8,7 @@ import {
   HomeContactOverlay,
   type ContactOriginRect,
 } from "@/components/home-contact-overlay";
-import { PillarFanAvatars } from "@/components/pillar-fan-avatars";
+import ExpandableAvatar from "@/components/expandable-avatar";
 import FeaturedResourcesSection from "@/components/section/featured-resources-section";
 import { DATA } from "@/data/resume";
 import { BLUR_FADE_DELAY } from "@/lib/blur-fade";
@@ -63,7 +63,12 @@ export function HomePageClient() {
           <div className="flex flex-col gap-6">
             <BlurFade delay={0}>
               <div className="flex items-center gap-3 sm:gap-4">
-                <PillarFanAvatars />
+                <ExpandableAvatar
+                  srcs={DATA.avatarUrls}
+                  alt={DATA.name}
+                  initials={DATA.initials}
+                  className="size-[3.75rem] sm:size-[4.25rem]"
+                />
                 <div className="min-w-0 space-y-2">
                   <h1 className="text-3xl font-semibold tracking-tighter sm:text-4xl">
                     NIL Money Guide

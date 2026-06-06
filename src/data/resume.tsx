@@ -85,7 +85,7 @@ export const DATA = {
       type: "Guide",
       tabLabel: "The Playbook",
       description:
-        "This section takes things a step further by providing a deeper look into the core pillars of NIL money management. What's coming in? Where is it going? Who is handling it? What are the tax implications?\n\nThe more you earn, the more important it becomes to understand the systems surrounding your finances. This guide is designed to help you move beyond simply making money and toward managing it with purpose. By developing a clear understanding of cash flow, taxes, budgeting, savings, investments, and your professional support team, you'll be better equipped to make informed decisions, avoid costly mistakes, and turn today's opportunities into long-term financial security.",
+        "This section takes things a step further by providing a deeper look into the core pillars of NIL money management. What's coming in? Where is it going? Who is handling it? What are the tax implications?",
       slug: "what-to-do-with-all-this-money",
       audience: "NIL Athletes",
       pillars: "5",
