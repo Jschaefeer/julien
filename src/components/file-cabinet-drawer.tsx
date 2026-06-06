@@ -205,7 +205,7 @@ function LibraryTab({ touchStart }: { touchStart: boolean }) {
 
 function ArticlePreviewFooter() {
   return (
-    <div className="flex justify-end border-t border-border pt-4">
+    <div className="flex justify-end pt-4">
       <span className={cn("inline-flex shrink-0 items-center", accentCta)}>
         <span className={accentCtaInner}>
           Read article

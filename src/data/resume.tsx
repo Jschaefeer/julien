@@ -8,7 +8,7 @@ export const DATA = {
   url: "https://nilmoneyguide.com",
   tags: ["NIL", "Financial Literacy", "Sports Business", "Content"],
   description:
-    "Learn how to keep, grow, and protect your NIL earnings.",
+    "Learn how to keep, grow, and protect your NIL earnings as you navigate deals, contracts, taxes, and sudden income.",
   summary:
     "Julian Palmer creates financial literacy content for college athletes navigating NIL deals, contracts, and sudden income. Through **The NIL Dispatch**, he breaks down money management into clear, actionable guidance so athletes can protect what they earn.",
   education: [
